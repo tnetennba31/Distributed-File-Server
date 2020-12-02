@@ -1,0 +1,39 @@
+package DistributedFileApp;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class ConfigReader {
+//	private static int lineNum = 0;
+	static String serversListFile = "serversList.config";
+	private static BufferedReader bufferedReader;
+	
+	static {
+		resetReader();
+	}
+	
+	public static String getNextAddress() {
+		try {
+			return bufferedReader.readLine();
+		} catch (IOException e) {
+			resetReader();
+			try {
+				return bufferedReader.readLine();
+			} catch (IOException e1) {return null;}//should be unreachable 
+		}
+	}
+
+	public static void resetReader() {
+		try {
+			bufferedReader = new BufferedReader(
+								new InputStreamReader(
+								new FileInputStream(serversListFile)));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+}

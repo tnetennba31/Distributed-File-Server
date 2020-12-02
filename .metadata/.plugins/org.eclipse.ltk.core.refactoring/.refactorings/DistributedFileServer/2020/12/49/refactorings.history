@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;bee1.txt&apos; to &apos;DistributedFileClient/src/tests&apos;&#x0A;- Original project: &apos;DistributedFileServer&apos;&#x0A;- Destination element: &apos;DistributedFileClient/src/tests&apos;&#x0A;- Original element: &apos;bee1.txt&apos;" description="Copy file" destination="=DistributedFileClient/src&lt;tests" element1="bee1.txt" files="1" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1606945887010" units="0" version="1.0"/>
+</session>

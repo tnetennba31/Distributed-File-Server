@@ -6,9 +6,6 @@ import menuStateMachine.EndState;
 import menuStateMachine.StartState;
 import menuStateMachine.State;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 

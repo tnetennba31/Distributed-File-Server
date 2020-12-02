@@ -1,0 +1,28 @@
+package tests;
+
+import static org.junit.Assert.*;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
+import java.nio.file.OpenOption;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+
+import org.junit.Test;
+
+public class TestFileLocking {
+
+	@Test
+	public void testFileLocking() throws IOException {
+		File f = new File("beetest.txt");
+		FileChannel fchannel = FileChannel.open(f.toPath(), StandardOpenOption.APPEND);
+		FileLock flock = fchannel.tryLock();
+		assertTrue(flock.isValid());
+		assertFalse(flock.isShared());
+		assertEquals(fchannel, flock.acquiredBy());
+	}
+
+}

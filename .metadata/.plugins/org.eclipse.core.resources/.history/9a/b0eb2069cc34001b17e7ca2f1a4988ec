@@ -1,0 +1,23 @@
+package menuStateMachine;
+
+/**
+ * This is just another example of what a menu state can look like.
+ * 
+ * @author merlin
+ *
+ */
+public class OpenWriteMenuState extends State
+{
+
+	private MenuOption[] myMenuOptions =
+		{ new MenuOptionForAction("Do another Action", new AnotherConcreteAction(),YetAnotherMenuState.class),
+				new MenuOptionForMenu("Exit", StartState.class) };
+	
+	/**
+	 * 
+	 */
+	public OpenWriteMenuState()
+	{
+		super.loadMenu(myMenuOptions);
+	}
+}

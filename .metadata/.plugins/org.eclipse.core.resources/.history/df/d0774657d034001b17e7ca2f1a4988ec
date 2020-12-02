@@ -1,0 +1,27 @@
+package menuStateMachine;
+
+import java.util.Scanner;
+
+/**
+ * This is a stupid action just to show how things work
+ * 
+ * @author merlin
+ *
+ */
+public class WriteAction extends MenuAction
+{
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	void execute()
+	{
+		Scanner keyboard = new Scanner(System.in);
+		System.out.println("Enter the name of the file to open for write:");
+		String input = keyboard.nextLine();
+		System.out.println("I can some something with this input: " + input);
+		keyboard.close();
+	}
+
+}

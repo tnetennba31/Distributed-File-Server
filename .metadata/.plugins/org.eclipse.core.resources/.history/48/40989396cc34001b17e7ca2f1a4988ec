@@ -1,0 +1,25 @@
+package menuStateMachine;
+
+/**
+ * This is the state that the machine starts in.  In other words, it is the highest level menu
+ * @author merlin
+ *
+ */
+public class StartState extends State
+{
+
+	private static final MenuOption[] x =
+		{ new MenuOptionForMenu("First Option to another menu", OpenReadMenuState.class),
+				new MenuOptionForMenu("Second Option to Second Menu", OpenWriteMenuState.class),
+				new MenuOptionForMenu("Exit", EndState.class) };
+
+	/**
+	 * 
+	 */
+	public StartState()
+	{
+
+		super.loadMenu(x);
+	}
+
+}

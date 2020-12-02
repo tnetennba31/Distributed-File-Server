@@ -1,0 +1,19 @@
+module DistributedFileApp
+{
+typedef sequence<octet> byteSeq;
+  interface DistributedFile
+  {
+	string csOpenRead(in string fileName);
+	boolean csCloseRead(in string fileName);
+	string csOpenWrite(in string fileName);
+	boolean csCloseWrite(in string fileName);
+
+	string ssOpenRead(in string fileName);
+	boolean ssCloseRead(in string fileName);
+	string ssOpenWrite(in string fileName);
+	boolean ssLockWrite(in string fileName);
+	string ssCloseWrite(in string fileName);
+
+	oneway void shutdown();
+  };
+};

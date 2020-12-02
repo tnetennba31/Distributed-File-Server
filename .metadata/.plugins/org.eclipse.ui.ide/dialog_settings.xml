@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+		<item value="/home/mc6672/Documents/distributedfilegarbage/DistributedFileApp"/>
+		<item value="/home/mc6672/Documents/distributedfilegarbage/DistributedFileClient"/>
+		<item value="/home/mc6672/Documents/distributedfilegarbage/DistributedFileServer"/>
+		<item value="/home/mc6672/Documents/distributedfilegarbage"/>
+		<item value="/home/mc6672/Documents/lsa_project_4/FileSystemServer"/>
+		<item value="/home/mc6672/Documents/lsa_project_4/FileSystem"/>
+		<item value="/home/mc6672/Documents/lsa_project_4/FileSystemClient"/>
+		<item value="/home/mc6672/Documents/lsa_project_4/DistributedFile"/>
+		<item value="/home/mc6672/Documents/lsa_project_4"/>
+		<item value="/home/mc6672/Documents/LSA_Project3/FileSystemServer"/>
+		<item value="/home/mc6672/Documents/LSA_Project3/FileSystemClient"/>
+		<item value="/home/mc6672/Documents/LSA_Project3/FileSystem"/>
+	</list>
+	<section name="SaveAsDialogSettings">
+		<item key="DIALOG_X_ORIGIN" value="701"/>
+		<item key="DIALOG_Y_ORIGIN" value="127"/>
+		<item key="DIALOG_WIDTH" value="525"/>
+		<item key="DIALOG_HEIGHT" value="601"/>
+		<item key="DIALOG_FONT_NAME" value="1|Noto Sans|9.0|0|GTK|1|"/>
+	</section>
+	<section name="ChooseWorkspaceDialogSettings">
+		<item key="DIALOG_X_ORIGIN" value="638"/>
+		<item key="DIALOG_Y_ORIGIN" value="340"/>
+	</section>
+	<section name="WORKBENCH_SETTINGS">
+		<list key="ENABLED_TRANSFERS">
+		</list>
+	</section>
+</section>

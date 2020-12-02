@@ -1,0 +1,4 @@
+INDEX VERSION 1.131+/home/mc6672/eclipse-workspace/.metadata/.plugins/org.eclipse.jdt.core
+197958804.index
+4279169243.index
+1646731640.index

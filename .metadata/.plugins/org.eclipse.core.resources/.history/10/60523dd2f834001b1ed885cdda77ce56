@@ -29,7 +29,7 @@ class DistributedFileImpl extends DistributedFilePOA {
 			s.close();
 			return contents.toString();
 		} catch (FileNotFoundException e) {
-			return connectToAnotherServer(fileName);
+			return connectToAnotherServer();
 		}
 	}
 
@@ -76,7 +76,7 @@ class DistributedFileImpl extends DistributedFilePOA {
 		return fileName;
 	}
 
-	public String connectToAnotherServer(String fileName) {
+	public String connectToAnotherServer() {
 		boolean found = false;
 		while (!found) {
 			try {
@@ -110,14 +110,9 @@ class DistributedFileImpl extends DistributedFilePOA {
 				ncRef.rebind(path, href);
 
 				System.out.println("DistributedFileServer ready and waiting ...");
-				
-				String fileContents = serverToServerImpl.ssOpenRead(fileName);
 
-				if (!fileContents.equalsIgnoreCase("File Not Found")) {
-					return fileContents;
-				} else {
-					return "gross";
-				}
+				// wait for invocations from clients
+				orb.run();
 			}
 
 			catch (Exception e) {

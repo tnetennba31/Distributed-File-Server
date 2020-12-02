@@ -11,25 +11,30 @@ import org.omg.CosNaming.NamingContextExtHelper;
 import org.omg.PortableServer.POA;
 import org.omg.PortableServer.POAHelper;
 
-class DistributedFileImpl extends DistributedFilePOA {
+class DistributedFileImpl extends DistributedFilePOA
+{
 	private ORB orb;
 
-	public void setORB(ORB orb_val) {
+	public void setORB(ORB orb_val)
+	{
 		orb = orb_val;
 	}
 
 	public String csOpenRead(String fileName) {
-		try {
+		try
+		{
 			Scanner s = new Scanner(new File(fileName));
 			StringBuffer contents = new StringBuffer("");
-			while (s.hasNext()) {
+			while (s.hasNext())
+			{
 				contents.append(s.nextLine() + "\n");
 			}
 
 			s.close();
 			return contents.toString();
-		} catch (FileNotFoundException e) {
-			return connectToAnotherServer(fileName);
+		} catch (FileNotFoundException e)
+		{
+			return "File Not Found";
 		}
 	}
 
@@ -46,23 +51,12 @@ class DistributedFileImpl extends DistributedFilePOA {
 	}
 
 	public String ssOpenRead(String fileName) {
-		try {
-			Scanner s = new Scanner(new File(fileName));
-			StringBuffer contents = new StringBuffer("");
-			while (s.hasNext()) {
-				contents.append(s.nextLine() + "\n");
-			}
-
-			s.close();
-			return contents.toString();
-		} catch (FileNotFoundException e) {
-			return "File Not Found";
-		}
+		return fileName;
 	}
 
 	public boolean ssCloseRead(String fileName) {
 		return true;
-	} // fake news, remove if feasible
+	} //fake news, remove if feasible
 
 	public String ssOpenWrite(String fileName) {
 		return fileName;
@@ -76,63 +70,9 @@ class DistributedFileImpl extends DistributedFilePOA {
 		return fileName;
 	}
 
-	public String connectToAnotherServer(String fileName) {
-		boolean found = false;
-		while (!found) {
-			try {
-				String nextServer = ConfigReader.getNextAddress();
-				String address[] = { "-ORBInitialHost", nextServer, "-ORBInitialPort", "1058", "-port", "1059" };
-				// create and initialize the ORB
-				ORB orb = ORB.init(address, null);
-
-				// get reference to rootpoa & activate the POAManager
-				POA rootpoa = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
-				rootpoa.the_POAManager().activate();
-
-				// create servant and register it with the ORB
-				DistributedFileImpl serverToServerImpl = new DistributedFileImpl();
-				serverToServerImpl.setORB(orb);
-
-				// get object reference from the servant
-				org.omg.CORBA.Object ref = rootpoa.servant_to_reference(serverToServerImpl);
-				DistributedFile href = DistributedFileHelper.narrow(ref);
-
-				// get the root naming context
-				// NameService invokes the name service
-				org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
-				// Use NamingContextExt which is part of the Interoperable
-				// Naming Service (INS) specification.
-				NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
-
-				// bind the Object Reference in Naming
-				String name = "DistributedFile";
-				NameComponent path[] = ncRef.to_name(name);
-				ncRef.rebind(path, href);
-
-				System.out.println("DistributedFileServer ready and waiting ...");
-				
-				String fileContents = serverToServerImpl.ssOpenRead(fileName);
-
-				if (!fileContents.equalsIgnoreCase("File Not Found")) {
-					return fileContents;
-				} else {
-					return "gross";
-				}
-			}
-
-			catch (Exception e) {
-				System.err.println("ERROR: " + e);
-				e.printStackTrace(System.out);
-			}
-
-			System.out.println("DistributedFileServer Exiting ...");
-		}
-
-		return null;
-	}
-
 	// implement shutdown() method
-	public void shutdown() {
+	public void shutdown()
+	{
 		orb.shutdown(false);
 	}
 
@@ -140,18 +80,20 @@ class DistributedFileImpl extends DistributedFilePOA {
 
 /**
  * This is the class that runs on the server
- * 
  * @author merlin
  *
  */
-public class DistributedFileServer {
+public class DistributedFileServer
+{
 
 	/**
 	 * @param args ignored
 	 */
-	public static void main(String args[]) {
-		try {
-			String address[] = { "-ORBInitialHost", "localhost", "-ORBInitialPort", "1058", "-port", "1059" };
+	public static void main(String args[])
+	{
+		try
+		{
+			String address[] = {"-ORBInitialHost", "localhost", "-ORBInitialPort", "1058", "-port", "1059"};
 			// create and initialize the ORB
 			ORB orb = ORB.init(address, null);
 
@@ -185,7 +127,8 @@ public class DistributedFileServer {
 			orb.run();
 		}
 
-		catch (Exception e) {
+		catch (Exception e)
+		{
 			System.err.println("ERROR: " + e);
 			e.printStackTrace(System.out);
 		}

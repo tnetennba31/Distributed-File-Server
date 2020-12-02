@@ -110,14 +110,8 @@ class DistributedFileImpl extends DistributedFilePOA {
 				ncRef.rebind(path, href);
 
 				System.out.println("DistributedFileServer ready and waiting ...");
-				
-				String fileContents = serverToServerImpl.ssOpenRead(fileName);
 
-				if (!fileContents.equalsIgnoreCase("File Not Found")) {
-					return fileContents;
-				} else {
-					return "gross";
-				}
+				serverToServerImpl.ssOpenRead(fileName);
 			}
 
 			catch (Exception e) {

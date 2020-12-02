@@ -29,7 +29,7 @@ class DistributedFileImpl extends DistributedFilePOA {
 			s.close();
 			return contents.toString();
 		} catch (FileNotFoundException e) {
-			return connectToAnotherServer(fileName);
+			return "File Not Found";
 		}
 	}
 
@@ -46,18 +46,7 @@ class DistributedFileImpl extends DistributedFilePOA {
 	}
 
 	public String ssOpenRead(String fileName) {
-		try {
-			Scanner s = new Scanner(new File(fileName));
-			StringBuffer contents = new StringBuffer("");
-			while (s.hasNext()) {
-				contents.append(s.nextLine() + "\n");
-			}
-
-			s.close();
-			return contents.toString();
-		} catch (FileNotFoundException e) {
-			return "File Not Found";
-		}
+		return fileName;
 	}
 
 	public boolean ssCloseRead(String fileName) {
@@ -76,12 +65,11 @@ class DistributedFileImpl extends DistributedFilePOA {
 		return fileName;
 	}
 
-	public String connectToAnotherServer(String fileName) {
+	public String connectToAnotherServer() {
 		boolean found = false;
 		while (!found) {
 			try {
-				String nextServer = ConfigReader.getNextAddress();
-				String address[] = { "-ORBInitialHost", nextServer, "-ORBInitialPort", "1058", "-port", "1059" };
+				String address[] = { "-ORBInitialHost", "localhost", "-ORBInitialPort", "1058", "-port", "1059" };
 				// create and initialize the ORB
 				ORB orb = ORB.init(address, null);
 
@@ -90,11 +78,11 @@ class DistributedFileImpl extends DistributedFilePOA {
 				rootpoa.the_POAManager().activate();
 
 				// create servant and register it with the ORB
-				DistributedFileImpl serverToServerImpl = new DistributedFileImpl();
-				serverToServerImpl.setORB(orb);
+				DistributedFileImpl distributedFileImpl = new DistributedFileImpl();
+				distributedFileImpl.setORB(orb);
 
 				// get object reference from the servant
-				org.omg.CORBA.Object ref = rootpoa.servant_to_reference(serverToServerImpl);
+				org.omg.CORBA.Object ref = rootpoa.servant_to_reference(distributedFileImpl);
 				DistributedFile href = DistributedFileHelper.narrow(ref);
 
 				// get the root naming context
@@ -110,14 +98,9 @@ class DistributedFileImpl extends DistributedFilePOA {
 				ncRef.rebind(path, href);
 
 				System.out.println("DistributedFileServer ready and waiting ...");
-				
-				String fileContents = serverToServerImpl.ssOpenRead(fileName);
 
-				if (!fileContents.equalsIgnoreCase("File Not Found")) {
-					return fileContents;
-				} else {
-					return "gross";
-				}
+				// wait for invocations from clients
+				orb.run();
 			}
 
 			catch (Exception e) {

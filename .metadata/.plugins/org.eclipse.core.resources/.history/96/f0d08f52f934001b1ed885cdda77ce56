@@ -115,8 +115,6 @@ class DistributedFileImpl extends DistributedFilePOA {
 
 				if (!fileContents.equalsIgnoreCase("File Not Found")) {
 					return fileContents;
-				} else {
-					return "gross";
 				}
 			}
 

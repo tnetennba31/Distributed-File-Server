@@ -34,8 +34,9 @@ class DistributedFileImpl extends DistributedFilePOA
 			return contents.toString();
 		} catch (FileNotFoundException e)
 		{
-			return "File Not Found";
+			e.printStackTrace();
 		}
+		return null;
 	}
 
 	public boolean csCloseRead(String fileName) {

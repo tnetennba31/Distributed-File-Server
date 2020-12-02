@@ -26,7 +26,7 @@ public abstract class State
 	/**
 	 * Display this state's menu options to the user
 	 */
-	public void printOptions()
+	void printOptions()
 	{
 		System.out.println("\n Please pick an option\n");
 		for (int i = 0; i < menuOptions.length; i++)

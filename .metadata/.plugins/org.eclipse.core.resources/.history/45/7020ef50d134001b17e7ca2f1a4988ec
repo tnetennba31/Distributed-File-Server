@@ -2,15 +2,9 @@ package DistributedFileApp;
 
 import org.omg.CosNaming.*;
 
-import menuStateMachine.EndState;
-import menuStateMachine.StartState;
-import menuStateMachine.State;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Scanner;
 
 import org.omg.CORBA.*;
 
@@ -46,24 +40,7 @@ public class DistributedFileClient
 			distributedFileImpl = DistributedFileHelper.narrow(ncRef.resolve_str(name));
 
 			System.out.println("Obtained a handle on server object: " + distributedFileImpl);
-			
-			Scanner keyboard = new Scanner(System.in);
-			State currentState = new StartState();
-			while (currentState.getClass() != EndState.class)
-			{
-				currentState.printOptions();
-				try
-				{
-					int option = keyboard.nextInt();
-					currentState = currentState.processOption(option);
-				} catch (InputMismatchException e)
-				{
-					System.out.println("Please enter the number of the option you'd like to select");
-					
-				}
-				keyboard.nextLine();
-			}
-			keyboard.close();
+			System.out.println(distributedFileImpl.csOpenRead("bee1.txt"));
 			
 			// This is how we would shut down the server
 			//distributedFileImpl.shutdown();
@@ -73,10 +50,6 @@ public class DistributedFileClient
 			System.out.println("ERROR : " + e);
 			e.printStackTrace(System.out);
 		}
-	}
-
-	public static DistributedFile getDistributedFileImpl() {
-		return distributedFileImpl;
 	}
 
 }

@@ -46,6 +46,7 @@ public class DistributedFileClient
 			distributedFileImpl = DistributedFileHelper.narrow(ncRef.resolve_str(name));
 
 			System.out.println("Obtained a handle on server object: " + distributedFileImpl);
+			//System.out.println(distributedFileImpl.csOpenRead("bee1.txt"));
 			
 			Scanner keyboard = new Scanner(System.in);
 			State currentState = new StartState();
@@ -73,10 +74,6 @@ public class DistributedFileClient
 			System.out.println("ERROR : " + e);
 			e.printStackTrace(System.out);
 		}
-	}
-
-	public static DistributedFile getDistributedFileImpl() {
-		return distributedFileImpl;
 	}
 
 }

@@ -48,9 +48,8 @@ class DistributedFileImpl extends DistributedFilePOA {
 
 	public String ssOpenRead(String fileName) {
 		System.out.println("Printing from Germany");
-		String path = System.getProperty("user.home") + "/files/" + fileName;
 		try {
-			Scanner s = new Scanner(new File(path));
+			Scanner s = new Scanner(new File(fileName));
 			StringBuffer contents = new StringBuffer("");
 			while (s.hasNext()) {
 				contents.append(s.nextLine() + "\n");

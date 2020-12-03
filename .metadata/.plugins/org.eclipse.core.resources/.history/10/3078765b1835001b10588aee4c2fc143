@@ -21,7 +21,7 @@ public class ReadAction extends MenuAction
 	{
 		Scanner keyboard = new Scanner(System.in);
 		System.out.println("Enter the name of the file to open for read:");
-		String input = keyboard.nextLine();
+		String input = System.getProperty("user.home") + "/files/" + keyboard.nextLine();
 		System.out.println(DistributedFileClient.getDistributedFileImpl().csOpenRead(input));
 	}
 

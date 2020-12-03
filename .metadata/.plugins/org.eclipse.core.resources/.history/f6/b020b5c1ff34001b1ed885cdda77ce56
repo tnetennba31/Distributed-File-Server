@@ -46,7 +46,6 @@ class DistributedFileImpl extends DistributedFilePOA {
 	}
 
 	public String ssOpenRead(String fileName) {
-		System.out.println("Printing from Germany");
 		try {
 			Scanner s = new Scanner(new File(fileName));
 			StringBuffer contents = new StringBuffer("");
@@ -110,7 +109,7 @@ class DistributedFileImpl extends DistributedFilePOA {
 				NameComponent path[] = ncRef.to_name(name);
 				ncRef.rebind(path, href);
 
-				System.out.println("By Jove, we've connected to another server...");
+				System.out.println("DistributedFileServer ready and waiting ...");
 				
 				String fileContents = serverToServerImpl.ssOpenRead(fileName);
 

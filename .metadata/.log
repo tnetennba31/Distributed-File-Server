@@ -2071,3 +2071,87 @@ com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine
 	at org.eclipse.debug.internal.ui.model.elements.ElementLabelProvider$LabelUpdater.run(ElementLabelProvider.java:147)
 	at org.eclipse.debug.internal.ui.model.elements.ElementLabelProvider$LabelJob.run(ElementLabelProvider.java:74)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+!SESSION 2020-12-02 19:56:10.616 -----------------------------------------------
+eclipse.buildId=4.12.0.I20190605-1800
+java.version=1.8.0_275
+java.vendor=Private Build
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.core.resources 2 10035 2020-12-02 19:56:12.598
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.egit.core 1 0 2020-12-02 19:56:14.049
+!MESSAGE Using Apache MINA sshd as ssh client.
+
+!ENTRY org.libreoffice.ide.eclipse.core 1 1 2020-12-02 19:56:17.582
+!MESSAGE LOEclipseIntegration started
+
+!ENTRY org.eclipse.launchbar.core 2 0 2020-12-02 19:56:19.677
+!MESSAGE Enablement expression is missing for descriptor type org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2020-12-02 19:56:19.680
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType
+
+!ENTRY org.libreoffice.ide.eclipse.core 1 1 2020-12-02 19:56:20.699
+!MESSAGE Resources changes are now listened
+
+!ENTRY org.libreoffice.ide.eclipse.core 1 1 2020-12-02 19:56:20.705
+!MESSAGE Java UNO resources changes are now listened
+!SESSION 2020-12-02 20:01:15.809 -----------------------------------------------
+eclipse.buildId=4.12.0.I20190605-1800
+java.version=1.8.0_275
+java.vendor=Private Build
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.core.resources 2 10035 2020-12-02 20:01:18.709
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.egit.core 1 0 2020-12-02 20:01:20.106
+!MESSAGE Using Apache MINA sshd as ssh client.
+
+!ENTRY org.libreoffice.ide.eclipse.core 1 1 2020-12-02 20:01:23.504
+!MESSAGE LOEclipseIntegration started
+
+!ENTRY org.eclipse.launchbar.core 2 0 2020-12-02 20:01:25.695
+!MESSAGE Enablement expression is missing for descriptor type org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2020-12-02 20:01:25.698
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType
+
+!ENTRY org.libreoffice.ide.eclipse.core 1 1 2020-12-02 20:01:26.600
+!MESSAGE Resources changes are now listened
+
+!ENTRY org.libreoffice.ide.eclipse.core 1 1 2020-12-02 20:01:26.606
+!MESSAGE Java UNO resources changes are now listened
+!SESSION 2020-12-02 20:18:40.140 -----------------------------------------------
+eclipse.buildId=4.12.0.I20190605-1800
+java.version=1.8.0_275
+java.vendor=Private Build
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.core.resources 2 10035 2020-12-02 20:18:43.042
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.egit.core 1 0 2020-12-02 20:18:44.526
+!MESSAGE Using Apache MINA sshd as ssh client.
+
+!ENTRY org.libreoffice.ide.eclipse.core 1 1 2020-12-02 20:18:48.109
+!MESSAGE LOEclipseIntegration started
+
+!ENTRY org.eclipse.launchbar.core 2 0 2020-12-02 20:18:50.175
+!MESSAGE Enablement expression is missing for descriptor type org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2020-12-02 20:18:50.177
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType
+
+!ENTRY org.libreoffice.ide.eclipse.core 1 1 2020-12-02 20:18:51.090
+!MESSAGE Resources changes are now listened
+
+!ENTRY org.libreoffice.ide.eclipse.core 1 1 2020-12-02 20:18:51.099
+!MESSAGE Java UNO resources changes are now listened

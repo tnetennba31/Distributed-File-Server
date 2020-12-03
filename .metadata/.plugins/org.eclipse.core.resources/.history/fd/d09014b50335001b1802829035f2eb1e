@@ -86,10 +86,35 @@ class DistributedFileImpl extends DistributedFilePOA {
 				// create and initialize the ORB
 				ORB orb = ORB.init(address, null);
 				
+				//exam code beginning
 				org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
 				NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
 				
-				DistributedFile serverToServerImpl = DistributedFileHelper.narrow(ncRef.resolve_str("DistributedFile"));
+				clientToServerImpl = ClientToServerHelper.narrow(ncRef.resolve_str(name));
+
+//				// get reference to rootpoa & activate the POAManager
+//				POA rootpoa = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
+//				rootpoa.the_POAManager().activate();
+//
+//				// create servant and register it with the ORB
+//				DistributedFileImpl serverToServerImpl = new DistributedFileImpl();
+//				serverToServerImpl.setORB(orb);
+//
+//				// get object reference from the servant
+//				org.omg.CORBA.Object ref = rootpoa.servant_to_reference(serverToServerImpl);
+//				DistributedFile href = DistributedFileHelper.narrow(ref);
+//
+//				// get the root naming context
+//				// NameService invokes the name service
+//				org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
+//				// Use NamingContextExt which is part of the Interoperable
+//				// Naming Service (INS) specification.
+//				NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
+//
+//				// bind the Object Reference in Naming
+//				String name = "DistributedFile";
+//				NameComponent path[] = ncRef.to_name(name);
+//				ncRef.rebind(path, href);
 
 				System.out.println("By Jove, we've connected to another server...");
 				

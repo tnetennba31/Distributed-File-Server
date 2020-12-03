@@ -33,6 +33,10 @@ class DistributedFileImpl extends DistributedFilePOA {
 			return connectToAnotherServer(fileName);
 		}
 	}
+	
+//	public String csOpenRead(String fileName) {
+//		return FileManager.getRealFileName(fileName);
+//	}
 
 	public boolean csCloseRead(String fileName) {
 		return true;

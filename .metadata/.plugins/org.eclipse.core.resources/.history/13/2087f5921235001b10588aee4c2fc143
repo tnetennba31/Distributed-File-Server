@@ -20,6 +20,7 @@ class DistributedFileImpl extends DistributedFilePOA {
 
 	public String csOpenRead(String fileName) {
 		try {
+			fileName = "~/files/" + fileName;
 			Scanner s = new Scanner(new File(fileName));
 			StringBuffer contents = new StringBuffer("");
 			while (s.hasNext()) {
@@ -48,6 +49,7 @@ class DistributedFileImpl extends DistributedFilePOA {
 	public String ssOpenRead(String fileName) {
 		System.out.println("Printing from Germany");
 		try {
+			fileName = "~/files/" + fileName;
 			Scanner s = new Scanner(new File(fileName));
 			StringBuffer contents = new StringBuffer("");
 			while (s.hasNext()) {

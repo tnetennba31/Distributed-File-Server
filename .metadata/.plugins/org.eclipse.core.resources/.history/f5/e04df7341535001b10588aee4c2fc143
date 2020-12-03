@@ -20,7 +20,8 @@ class DistributedFileImpl extends DistributedFilePOA {
 
 	public String csOpenRead(String fileName) {
 		try {
-			Scanner s = new Scanner(new File(fileName));
+			String fname = "~/files/" + fileName;
+			Scanner s = new Scanner(new File(fname));
 			StringBuffer contents = new StringBuffer("");
 			while (s.hasNext()) {
 				contents.append(s.nextLine() + "\n");

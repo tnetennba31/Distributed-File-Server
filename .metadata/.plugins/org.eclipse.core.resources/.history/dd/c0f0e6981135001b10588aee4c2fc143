@@ -48,6 +48,7 @@ class DistributedFileImpl extends DistributedFilePOA {
 	public String ssOpenRead(String fileName) {
 		System.out.println("Printing from Germany");
 		try {
+			fileName = "~/files/" + fileName;
 			Scanner s = new Scanner(new File(fileName));
 			StringBuffer contents = new StringBuffer("");
 			while (s.hasNext()) {
@@ -100,7 +101,7 @@ class DistributedFileImpl extends DistributedFilePOA {
 				} else {
 					return "gross";
 				}
-			}
+//			}
 
 			catch (Exception e) {
 				System.err.println("ERROR: " + e);
@@ -108,7 +109,7 @@ class DistributedFileImpl extends DistributedFilePOA {
 			}
 
 			System.out.println("DistributedFileServer Exiting ...");
-//		}
+		}
 
 		return null;
 	}

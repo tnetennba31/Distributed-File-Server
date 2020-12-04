@@ -1,0 +1,36 @@
+package DistributedFileApp;
+
+import java.io.BufferedReader;
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class ConfigReader {
+	static String serversListFile = System.getProperty("user.home") + "/files/ServersList.config";
+	private static BufferedReader bufferedReader;
+	
+	static {
+		resetReader();
+	}
+	
+	public static String getNextAddress() throws IOException {
+		try {
+			return bufferedReader.readLine();
+		} catch (EOFException e) {
+			return null;
+		}
+	}
+
+	public static void resetReader() {
+		try {
+			bufferedReader = new BufferedReader(
+								new InputStreamReader(
+								new FileInputStream(serversListFile)));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+}

@@ -33,7 +33,7 @@ class DistributedFileImpl extends DistributedFilePOA {
 			return connectToAnotherServer(fileName);
 		}
 	}
-	
+
 //	public String csOpenRead(String fileName) {
 //		return FileManager.getRealFileName(fileName);
 //	}
@@ -51,7 +51,6 @@ class DistributedFileImpl extends DistributedFilePOA {
 	}
 
 	public String ssOpenRead(String fileName) {
-		System.out.println("Printing from Germany");
 		String path = System.getProperty("user.home") + "/files/" + fileName;
 		try {
 			Scanner s = new Scanner(new File(path));
@@ -63,7 +62,7 @@ class DistributedFileImpl extends DistributedFilePOA {
 			s.close();
 			return contents.toString();
 		} catch (FileNotFoundException e) {
-			return "File Not Found";
+			return "File Not Found - ssopenread";
 		}
 	}
 
@@ -84,39 +83,36 @@ class DistributedFileImpl extends DistributedFilePOA {
 	}
 
 	public String connectToAnotherServer(String fileName) {
-		boolean found = false;
-//		while (!found) {
+		ConfigReader.resetReader();
+		String nextServer = ConfigReader.getNextAddress();
+		while (nextServer != null) {
+
+			String address[] = { "-ORBInitialHost", nextServer, "-ORBInitialPort", "1058", "-port", "1059" };
+			// create and initialize the ORB
+			ORB orb = ORB.init(address, null);
+
 			try {
-				String nextServer = ConfigReader.getNextAddress();
-				String address[] = { "-ORBInitialHost", nextServer, "-ORBInitialPort", "1058", "-port", "1059" };
-				// create and initialize the ORB
-				ORB orb = ORB.init(address, null);
-				
 				org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
 				NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
-				
 				DistributedFile serverToServerImpl = DistributedFileHelper.narrow(ncRef.resolve_str("DistributedFile"));
 
 				System.out.println("By Jove, we've connected to another server...");
-				
+
 				String fileContents = serverToServerImpl.ssOpenRead(fileName);
 
 				if (!fileContents.equalsIgnoreCase("File Not Found")) {
 					return fileContents;
 				} else {
-					return "gross";
+					System.out.println("Not found on " + nextServer + ", trying again.");
+					nextServer = ConfigReader.getNextAddress();
 				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
+		}
 
-			catch (Exception e) {
-				System.err.println("ERROR: " + e);
-				e.printStackTrace(System.out);
-			}
+		return "File Not Found -- connecttoanotherserver";
 
-			System.out.println("DistributedFileServer Exiting ...");
-//		}
-
-		return null;
 	}
 
 	// implement shutdown() method

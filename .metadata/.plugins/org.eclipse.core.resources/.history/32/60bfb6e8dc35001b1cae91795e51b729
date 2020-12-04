@@ -1,0 +1,11 @@
+package menuStateMachine;
+
+public class ReadRecordAction extends MenuAction {
+
+	@Override
+	void execute() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

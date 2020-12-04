@@ -90,7 +90,7 @@ class DistributedFileImpl extends DistributedFilePOA {
 			String address[] = { "-ORBInitialHost", nextServer, "-ORBInitialPort", "1058", "-port", "1059" };
 			// create and initialize the ORB
 			ORB orb = ORB.init(address, null);
-			// return array of ss Impls
+
 			try {
 				org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
 				NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
@@ -167,8 +167,6 @@ public class DistributedFileServer {
 
 			// wait for invocations from clients
 			orb.run();
-			
-			System.out.println("gobbledyguck");
 		}
 
 		catch (Exception e) {

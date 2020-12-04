@@ -167,8 +167,6 @@ public class DistributedFileServer {
 
 			// wait for invocations from clients
 			orb.run();
-			
-			System.out.println("gobbledyguck");
 		}
 
 		catch (Exception e) {

@@ -2373,3 +2373,81 @@ Contains: Resource is out of sync with the file system: '/DistributedFileClient/
 !MESSAGE Problems encountered while moving resources.
 !SUBENTRY 3 org.eclipse.core.resources 4 274 2020-12-03 21:57:04.770
 !MESSAGE Resource is out of sync with the file system: '/DistributedFileClient/src/menuStateMachine/ReadAction.java'.
+!SESSION 2020-12-04 11:27:30.335 -----------------------------------------------
+eclipse.buildId=4.12.0.I20190605-1800
+java.version=1.8.0_275
+java.vendor=Private Build
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.core.resources 2 10035 2020-12-04 11:27:31.647
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.egit.core 1 0 2020-12-04 11:27:32.760
+!MESSAGE Using Apache MINA sshd as ssh client.
+
+!ENTRY org.libreoffice.ide.eclipse.core 1 1 2020-12-04 11:27:35.747
+!MESSAGE LOEclipseIntegration started
+
+!ENTRY org.eclipse.launchbar.core 2 0 2020-12-04 11:27:37.457
+!MESSAGE Enablement expression is missing for descriptor type org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2020-12-04 11:27:37.459
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType
+
+!ENTRY org.libreoffice.ide.eclipse.core 1 1 2020-12-04 11:27:38.268
+!MESSAGE Resources changes are now listened
+
+!ENTRY org.libreoffice.ide.eclipse.core 1 1 2020-12-04 11:27:38.285
+!MESSAGE Java UNO resources changes are now listened
+!SESSION 2020-12-04 11:31:03.610 -----------------------------------------------
+eclipse.buildId=4.12.0.I20190605-1800
+java.version=1.8.0_275
+java.vendor=Private Build
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.egit.core 1 0 2020-12-04 11:31:07.868
+!MESSAGE Using Apache MINA sshd as ssh client.
+
+!ENTRY org.libreoffice.ide.eclipse.core 1 1 2020-12-04 11:31:11.448
+!MESSAGE LOEclipseIntegration started
+
+!ENTRY org.eclipse.launchbar.core 2 0 2020-12-04 11:31:13.828
+!MESSAGE Enablement expression is missing for descriptor type org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2020-12-04 11:31:13.831
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType
+
+!ENTRY org.libreoffice.ide.eclipse.core 1 1 2020-12-04 11:31:14.686
+!MESSAGE Resources changes are now listened
+
+!ENTRY org.libreoffice.ide.eclipse.core 1 1 2020-12-04 11:31:14.691
+!MESSAGE Java UNO resources changes are now listened
+!SESSION 2020-12-04 18:50:33.028 -----------------------------------------------
+eclipse.buildId=4.12.0.I20190605-1800
+java.version=1.8.0_275
+java.vendor=Private Build
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.egit.core 1 0 2020-12-04 18:50:37.570
+!MESSAGE Using Apache MINA sshd as ssh client.
+
+!ENTRY org.libreoffice.ide.eclipse.core 1 1 2020-12-04 18:50:41.242
+!MESSAGE LOEclipseIntegration started
+
+!ENTRY org.eclipse.launchbar.core 2 0 2020-12-04 18:50:43.562
+!MESSAGE Enablement expression is missing for descriptor type org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2020-12-04 18:50:43.564
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType
+
+!ENTRY org.libreoffice.ide.eclipse.core 1 1 2020-12-04 18:50:44.409
+!MESSAGE Resources changes are now listened
+
+!ENTRY org.libreoffice.ide.eclipse.core 1 1 2020-12-04 18:50:44.420
+!MESSAGE Java UNO resources changes are now listened

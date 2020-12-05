@@ -11,33 +11,32 @@ import org.omg.CosNaming.NamingContextExtHelper;
 import org.omg.PortableServer.POA;
 import org.omg.PortableServer.POAHelper;
 
-class DistributedFileImpl extends DistributedFilePOA
-{
+class DistributedFileImpl extends DistributedFilePOA {
 	private ORB orb;
 
-	public void setORB(ORB orb_val)
-	{
+	public void setORB(ORB orb_val) {
 		orb = orb_val;
 	}
 
 	public String csOpenRead(String fileName) {
-		try
-		{
-			Scanner s = new Scanner(new File(fileName));
+		try {
+			String path = System.getProperty("user.home") + "/files/" + fileName;
+			Scanner s = new Scanner(new File(path));
 			StringBuffer contents = new StringBuffer("");
-			while (s.hasNext())
-			{
+			while (s.hasNext()) {
 				contents.append(s.nextLine() + "\n");
 			}
 
 			s.close();
 			return contents.toString();
-		} catch (FileNotFoundException e)
-		{
-			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			return connectToAnotherServer(fileName);
 		}
-		return null;
 	}
+
+//	public String csOpenRead(String fileName) {
+//		return FileManager.getRealFileName(fileName);
+//	}
 
 	public boolean csCloseRead(String fileName) {
 		return true;
@@ -52,12 +51,24 @@ class DistributedFileImpl extends DistributedFilePOA
 	}
 
 	public String ssOpenRead(String fileName) {
-		return fileName;
+		String path = System.getProperty("user.home") + "/files/" + fileName;
+		try {
+			Scanner s = new Scanner(new File(path));
+			StringBuffer contents = new StringBuffer("");
+			while (s.hasNext()) {
+				contents.append(s.nextLine() + "\n");
+			}
+
+			s.close();
+			return contents.toString();
+		} catch (FileNotFoundException e) {
+			return "File Not Found - ssopenread";
+		}
 	}
 
 	public boolean ssCloseRead(String fileName) {
 		return true;
-	}
+	} // fake news, remove if feasible
 
 	public String ssOpenWrite(String fileName) {
 		return fileName;
@@ -71,9 +82,41 @@ class DistributedFileImpl extends DistributedFilePOA
 		return fileName;
 	}
 
+	public static String connectToAnotherServer(String fileName) {
+		ConfigReader.resetReader();
+		String nextServer = ConfigReader.getNextAddress();
+		while (nextServer != null) {
+
+			String address[] = { "-ORBInitialHost", nextServer, "-ORBInitialPort", "1058", "-port", "1059" };
+			// create and initialize the ORB
+			ORB orb = ORB.init(address, null);
+			// return array of ss Impls
+			try {
+				org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
+				NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
+				DistributedFile serverToServerImpl = DistributedFileHelper.narrow(ncRef.resolve_str("DistributedFile"));
+
+				System.out.println("By Jove, we've connected to another server...");
+
+				String fileContents = serverToServerImpl.ssOpenRead(fileName);
+
+				if (!fileContents.equalsIgnoreCase("File Not Found")) {
+					return fileContents;
+				} else {
+					System.out.println("Not found on " + nextServer + ", trying again.");
+					nextServer = ConfigReader.getNextAddress();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return "File Not Found -- connecttoanotherserver";
+
+	}
+
 	// implement shutdown() method
-	public void shutdown()
-	{
+	public void shutdown() {
 		orb.shutdown(false);
 	}
 
@@ -81,20 +124,18 @@ class DistributedFileImpl extends DistributedFilePOA
 
 /**
  * This is the class that runs on the server
+ * 
  * @author merlin
  *
  */
-public class DistributedFileServer
-{
+public class DistributedFileServer {
 
 	/**
 	 * @param args ignored
 	 */
-	public static void main(String args[])
-	{
-		try
-		{
-			String address[] = {"-ORBInitialHost", "localhost", "-ORBInitialPort", "1058", "-port", "1059"};
+	public static void main(String args[]) {
+		try {
+			String address[] = { "-ORBInitialHost", "localhost", "-ORBInitialPort", "1058", "-port", "1059" };
 			// create and initialize the ORB
 			ORB orb = ORB.init(address, null);
 
@@ -128,8 +169,7 @@ public class DistributedFileServer
 			orb.run();
 		}
 
-		catch (Exception e)
-		{
+		catch (Exception e) {
 			System.err.println("ERROR: " + e);
 			e.printStackTrace(System.out);
 		}

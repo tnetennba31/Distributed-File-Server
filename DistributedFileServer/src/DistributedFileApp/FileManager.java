@@ -1,6 +1,8 @@
 package DistributedFileApp;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 
 
@@ -8,44 +10,68 @@ public class FileManager {
 
 	//hashmap keeps track of how many clients are reading each file
 	static HashMap<String, Integer> clientsReading = new HashMap<String, Integer>();
+	static HashMap<String, Integer> fileVersionNumbers = new HashMap<String, Integer>();
 	
-	static synchronized String getRealFileName(String inputFileName) {
-		
-		String realFileName = addVersionNumberToFileName(inputFileName);
-		String path = System.getProperty("user.home") + "/files/" + realFileName;
-		
-		boolean fileExists = (new File(path)).exists();
+	public static boolean fileExistsLocally(String fileName) {
+		String path = System.getProperty("user.home") + "/files/" + fileName;
+		return (new File(path)).exists();
+	}
 	
-		if (!fileExists) {
-//			DistributedFileServer.connectToAnotherServer();
-			//get from other server and create in fileSystem and put in hashmap
-			//return name
-			
-			clientsReading.put(realFileName, 1);
-			return realFileName;
+	public static boolean fileExistsRemotely(String fileName, DistributedFileImpl server) {
+		String fileContents = server.searchOtherServers(fileName);
+		if (fileContents.equalsIgnoreCase("File Not Found")) {
+			return false;
 		} else {
-			
-			//if file exists already, add new reader to hashmap and return name
-			clientsReading.put(realFileName, clientsReading.get(realFileName) + 1);
-			return realFileName;			
+			copyToLocal(fileName, fileContents);
+			return true;
 		}
 	}
 	
-	private static String addVersionNumberToFileName(String inputFileName) {
-		return inputFileName;//change this when we do version numbers
+	private static void copyToLocal(String fileName, String fileContents) {
+		try {
+			File file = new File(System.getProperty("user.home") + "/files/" + fileName);
+			file.createNewFile();
+			FileWriter fw = new FileWriter(file);
+			fw.append(fileContents);
+		} catch (IOException e) {
+			System.out.println("Unable to create file");
+			e.printStackTrace();
+		}
 	}
+	
+	public static void addClientReading(String fileName, boolean isNewFile) {
+		if (isNewFile) {
+			clientsReading.put(fileName, 1); //add to hashmap
+		} else {
+			clientsReading.put(fileName, clientsReading.get(fileName) + 1);
+		}
+	}
+	
+//	public static String retrieveFromRemoteAndGetFileName(DistributedFileImpl server, String fileName) {
+////		String realFileName = addVersionNumberToFileName(fileName);
+//
+//		String fileString = server.searchOtherServers(fileName); //get file contents from remote server
+//		
+//		createFile(fileString); //create it so client can open
+//		
+//		
+//		return fileName;
+//	}
+	
+//	private static String addVersionNumberToFileName(String inputFileName) {
+//		return inputFileName;//change this when we do version numbers
+//	}
 
 	static void doneReading(String inputFileName) {
 		//decrement number of clients reading in hashmap
-		String realFileName = addVersionNumberToFileName(inputFileName);
-		clientsReading.put(realFileName, clientsReading.get(realFileName) - 1);
+		clientsReading.put(inputFileName, clientsReading.get(inputFileName) - 1);
 		
 		//if no more readers, delete file and remove hashmap entry
-		if (clientsReading.get(realFileName) == 0) {
-			clientsReading.remove(realFileName);
+		if (clientsReading.get(inputFileName) == 0) {
+			clientsReading.remove(inputFileName);
 			
 			//delete the local file
-			File fileToDelete = new File(realFileName);
+			File fileToDelete = new File(inputFileName);
 			fileToDelete.delete();
 		}		
 	}
@@ -53,8 +79,16 @@ public class FileManager {
 	public static HashMap<String, Integer> getClientsReading() {
 		return clientsReading;
 	}
-	
-	
+
+//	private static void createFile(String realFileName) {
+//		File file = new File(realFileName);
+//		try {
+//			file.createNewFile();
+//		} catch (IOException e) {
+//			System.out.println("unable to create file");
+//			e.printStackTrace();
+//		}
+//	}
 	
 
 

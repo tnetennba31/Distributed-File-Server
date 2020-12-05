@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.HashMap;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
@@ -46,5 +47,16 @@ public class TestFileManager {
 		assertTrue(FileManager.getClientsReading().size() == 0);		
 
 	}
+	
+	@Test
+	public void testFileExists() {
+		
+		assertFalse(FileManager.fileExists("IDontExist.txt"));
+
+		assertTrue(FileManager.fileExists(testFile.getName()));
+
+	}
+	
+	
 
 }

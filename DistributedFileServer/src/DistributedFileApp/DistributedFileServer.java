@@ -18,25 +18,30 @@ class DistributedFileImpl extends DistributedFilePOA {
 		orb = orb_val;
 	}
 
-	public String csOpenRead(String fileName) {
-		try {
-			String path = System.getProperty("user.home") + "/files/" + fileName;
-			Scanner s = new Scanner(new File(path));
-			StringBuffer contents = new StringBuffer("");
-			while (s.hasNext()) {
-				contents.append(s.nextLine() + "\n");
-			}
+//	public String csOpenRead(String fileName) {
+//		try {
+//			String path = System.getProperty("user.home") + "/files/" + fileName;
+//			Scanner s = new Scanner(new File(path));
+//			StringBuffer contents = new StringBuffer("");
+//			while (s.hasNext()) {
+//				contents.append(s.nextLine() + "\n");
+//			}
+//
+//			s.close();
+//			return contents.toString();
+//		} catch (FileNotFoundException e) {
+//			return connectToAnotherServer(fileName);
+//		}
+//	}
 
-			s.close();
-			return contents.toString();
-		} catch (FileNotFoundException e) {
-			return connectToAnotherServer(fileName);
+	public String csOpenRead(String fileName) {
+		if (FileManager.fileExistsLocally(fileName) || FileManager.fileExistsRemotely(fileName, this)) {
+			FileManager.addClientReading(fileName, false);
+			return fileName;
+		} else { // doesn't exist anywhere
+			return "File Not Found";
 		}
 	}
-
-//	public String csOpenRead(String fileName) {
-//		return FileManager.getRealFileName(fileName);
-//	}
 
 	public boolean csCloseRead(String fileName) {
 		return true;
@@ -82,7 +87,7 @@ class DistributedFileImpl extends DistributedFilePOA {
 		return fileName;
 	}
 
-	public String connectToAnotherServer(String fileName) {
+	public String searchOtherServers(String fileName) {
 		ConfigReader.resetReader();
 		String nextServer = ConfigReader.getNextAddress();
 		while (nextServer != null) {
@@ -111,9 +116,29 @@ class DistributedFileImpl extends DistributedFilePOA {
 			}
 		}
 
-		return "File Not Found -- connecttoanotherserver";
+		return "File Not Found";
 
 	}
+	
+//	public DistributedFile connectToAnotherServer(String serverhost) {
+//		String address[] = { "-ORBInitialHost", serverhost, "-ORBInitialPort", "1058", "-port", "1059" };
+//		// create and initialize the ORB
+//		ORB orb = ORB.init(address, null);
+//		DistributedFile server = null;
+//		// return array of ss Impls
+//		try {
+//			org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
+//			NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
+//			DistributedFile serverToServerImpl = DistributedFileHelper.narrow(ncRef.resolve_str("DistributedFile"));
+//
+//			server = serverToServerImpl;
+//			
+//			System.out.println("By Jove, we've connected to another server...");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return server;
+//	}
 
 	// implement shutdown() method
 	public void shutdown() {
@@ -167,8 +192,6 @@ public class DistributedFileServer {
 
 			// wait for invocations from clients
 			orb.run();
-			
-			System.out.println("gobbledyguck");
 		}
 
 		catch (Exception e) {

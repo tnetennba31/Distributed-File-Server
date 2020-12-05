@@ -25,11 +25,9 @@ public class ReadAllAction extends MenuAction {
 		System.out.println("Enter the name of the file to open for read:");
 		String input = keyboard.nextLine();
 		try {
-			List<String> allLines = Files.readAllLines(Paths.get(System.getProperty("user.home") + "/files/"
+			List allLines = Files.readAllLines(Paths.get(System.getProperty("user.home") + "/files/"
 					+ DistributedFileClient.getDistributedFileImpl().csOpenRead(input)));
-			for (String s : allLines) {
-				System.out.println(s);
-			}
+			System.out.println();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -67,7 +67,7 @@ class DistributedFileImpl extends DistributedFilePOA {
 			s.close();
 			return contents.toString();
 		} catch (FileNotFoundException e) {
-			return "File Not Found";
+			return "File Not Found - ssopenread";
 		}
 	}
 

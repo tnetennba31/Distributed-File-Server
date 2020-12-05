@@ -18,22 +18,6 @@ class DistributedFileImpl extends DistributedFilePOA {
 		orb = orb_val;
 	}
 
-//	public String csOpenRead(String fileName) {
-//		try {
-//			String path = System.getProperty("user.home") + "/files/" + fileName;
-//			Scanner s = new Scanner(new File(path));
-//			StringBuffer contents = new StringBuffer("");
-//			while (s.hasNext()) {
-//				contents.append(s.nextLine() + "\n");
-//			}
-//
-//			s.close();
-//			return contents.toString();
-//		} catch (FileNotFoundException e) {
-//			return connectToAnotherServer(fileName);
-//		}
-//	}
-
 	public String csOpenRead(String fileName) {
 		if (FileManager.fileExistsLocally(fileName) || FileManager.fileExistsRemotely(fileName, this)) {
 			FileManager.addClientReading(fileName, true);
@@ -44,6 +28,7 @@ class DistributedFileImpl extends DistributedFilePOA {
 	}
 
 	public boolean csCloseRead(String fileName) {
+		FileManager.doneReading(fileName);
 		return true;
 	}
 
@@ -119,7 +104,7 @@ class DistributedFileImpl extends DistributedFilePOA {
 		return "File Not Found";
 
 	}
-	
+
 //	public DistributedFile connectToAnotherServer(String serverhost) {
 //		String address[] = { "-ORBInitialHost", serverhost, "-ORBInitialPort", "1058", "-port", "1059" };
 //		// create and initialize the ORB

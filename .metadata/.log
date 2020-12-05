@@ -2529,3 +2529,31 @@ Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp
 
 !ENTRY org.libreoffice.ide.eclipse.core 1 1 2020-12-05 17:41:30.468
 !MESSAGE Java UNO resources changes are now listened
+!SESSION 2020-12-05 18:26:38.257 -----------------------------------------------
+eclipse.buildId=4.12.0.I20190605-1800
+java.version=1.8.0_275
+java.vendor=Private Build
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.core.resources 2 10035 2020-12-05 18:26:41.241
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.egit.core 1 0 2020-12-05 18:26:42.657
+!MESSAGE Using Apache MINA sshd as ssh client.
+
+!ENTRY org.libreoffice.ide.eclipse.core 1 1 2020-12-05 18:26:46.226
+!MESSAGE LOEclipseIntegration started
+
+!ENTRY org.eclipse.launchbar.core 2 0 2020-12-05 18:26:48.759
+!MESSAGE Enablement expression is missing for descriptor type org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2020-12-05 18:26:48.772
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType
+
+!ENTRY org.libreoffice.ide.eclipse.core 1 1 2020-12-05 18:26:49.683
+!MESSAGE Resources changes are now listened
+
+!ENTRY org.libreoffice.ide.eclipse.core 1 1 2020-12-05 18:26:49.691
+!MESSAGE Java UNO resources changes are now listened

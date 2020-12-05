@@ -40,7 +40,7 @@ public class ReadRecordAction extends MenuAction {
 					}
 				}
 			} catch (InputMismatchException e) {
-				//TODO close read method call
+				DistributedFileClient.getDistributedFileImpl().csCloseRead(fileName);
 				return;
 			}
 		}

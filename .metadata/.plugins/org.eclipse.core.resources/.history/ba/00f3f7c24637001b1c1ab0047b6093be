@@ -1,6 +1,7 @@
 package menuStateMachine;
+import java.io.File;
 
-import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Scanner;
@@ -13,24 +14,22 @@ import DistributedFileApp.DistributedFileClient;
  * @author merlin
  *
  */
-public class ReadAllAction extends MenuAction {
+public class ReadAllAction extends MenuAction
+{
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	void execute() {
+	void execute()
+	{
 		Scanner keyboard = new Scanner(System.in);
 		System.out.println("Enter the name of the file to open for read:");
 		String input = keyboard.nextLine();
-		try {
-			System.out.println(Files.readAllLines(Paths.get(System.getProperty("user.home") + "/files/"
-					+ DistributedFileClient.getDistributedFileImpl().csOpenRead(input))));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		String fileContents = Files.readAllLines(Paths.get(System.getProperty("user.home") + "/files/" + fileName));
+		System.out.println(DistributedFileClient.getDistributedFileImpl().csOpenRead(input));
 	}
-
+	
 //	@Override
 //	void execute()
 //	{

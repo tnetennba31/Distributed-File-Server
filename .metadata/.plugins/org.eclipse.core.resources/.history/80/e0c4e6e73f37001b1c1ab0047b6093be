@@ -30,9 +30,9 @@ public class FileManager {
 	private static void copyToLocal(String fileName, String fileContents) {
 		try {
 			File file = new File(System.getProperty("user.home") + "/files/" + fileName);
+			//file.createNewFile();
 			FileWriter fw = new FileWriter(file);
 			fw.write(fileContents);
-			fw.close();
 		} catch (IOException e) {
 			System.out.println("Unable to create file");
 			e.printStackTrace();

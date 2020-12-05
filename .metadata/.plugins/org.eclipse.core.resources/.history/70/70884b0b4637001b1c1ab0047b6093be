@@ -1,6 +1,12 @@
 package menuStateMachine;
 
+import java.awt.List;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.FileSystem;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.InputMismatchException;
@@ -40,7 +46,6 @@ public class ReadRecordAction extends MenuAction {
 					}
 				}
 			} catch (InputMismatchException e) {
-				//TODO close read method call
 				return;
 			}
 		}

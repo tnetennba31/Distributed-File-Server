@@ -1,6 +1,12 @@
 package menuStateMachine;
 
+import java.awt.List;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.FileSystem;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.InputMismatchException;
@@ -29,18 +35,21 @@ public class ReadRecordAction extends MenuAction {
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
+//			fileContents.get
+//			String fileAsArray[] = fileString.split("\\r?\\n");
 			try {
 				while (true) {
 					System.out.println("Enter the line number to read. Enter a non-number to exit:");
 					int chosenLine = keyboard.nextInt();// should probably check for errors.
-					if (chosenLine < fileContents.size() && chosenLine >= 0) {
+					if (chosenLine < fileContents.size()) {
 						System.out.println(fileContents.get(chosenLine));
 					} else {
 						System.out.println("Line number invalid.");
 					}
+					
+//					System.out.println(fileAsArray[chosenLine]);
 				}
 			} catch (InputMismatchException e) {
-				//TODO close read method call
 				return;
 			}
 		}

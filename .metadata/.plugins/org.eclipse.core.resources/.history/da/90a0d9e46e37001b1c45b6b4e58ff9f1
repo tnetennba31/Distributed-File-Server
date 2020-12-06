@@ -41,22 +41,24 @@ public class FileManager {
 	public static void addClientReading(String fileName, boolean isNewFile) {
 		if (isNewFile) {
 			clientsReading.put(fileName, 1); // add to hashmap
+			System.out.println("reader adder");
 		} else {
 			clientsReading.put(fileName, clientsReading.get(fileName) + 1);
+			System.out.println("number reading:" + clientsReading.get(fileName));
+
 		}
-		System.out.println("Reader added. Number reading " + fileName + " is now " + clientsReading.get(fileName));
 	}
 
 	static void doneReading(String inputFileName) {
 		// decrement number of clients reading in hashmap
 		clientsReading.put(inputFileName, clientsReading.get(inputFileName) - 1);
 		System.out.println(
-				"Reader removed. Number reading " + inputFileName + " is now " + clientsReading.get(inputFileName));
+				"number of readers reading " + inputFileName + " is now: " + clientsReading.get(inputFileName));
 
 		// if no more readers, delete file and remove hashmap entry
 		if (clientsReading.get(inputFileName) == 0 && !NativeFileReader.isNativeFile(inputFileName)) {
 			clientsReading.remove(inputFileName);
-			System.out.println("No one is reading " + inputFileName + " so it was deleted.");
+			System.out.println("no one is reading " + inputFileName + " so it was deleted.");
 
 			// delete the local file
 			File fileToDelete = new File(System.getProperty("user.home") + "/files/" + inputFileName);

@@ -20,7 +20,6 @@ public class NativeFileReader {
 			String s = bufferedReader.readLine();
 			while (s != null) {
 				if (s.contentEquals(fileName)) return true;
-				s = bufferedReader.readLine();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -2557,3 +2557,28 @@ Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp
 
 !ENTRY org.libreoffice.ide.eclipse.core 1 1 2020-12-05 18:26:49.691
 !MESSAGE Java UNO resources changes are now listened
+!SESSION 2020-12-05 21:41:47.399 -----------------------------------------------
+eclipse.buildId=4.12.0.I20190605-1800
+java.version=1.8.0_275
+java.vendor=Private Build
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.egit.core 1 0 2020-12-05 21:41:51.747
+!MESSAGE Using Apache MINA sshd as ssh client.
+
+!ENTRY org.libreoffice.ide.eclipse.core 1 1 2020-12-05 21:41:55.322
+!MESSAGE LOEclipseIntegration started
+
+!ENTRY org.eclipse.launchbar.core 2 0 2020-12-05 21:41:57.735
+!MESSAGE Enablement expression is missing for descriptor type org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2020-12-05 21:41:57.738
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType
+
+!ENTRY org.libreoffice.ide.eclipse.core 1 1 2020-12-05 21:41:58.427
+!MESSAGE Resources changes are now listened
+
+!ENTRY org.libreoffice.ide.eclipse.core 1 1 2020-12-05 21:41:58.434
+!MESSAGE Java UNO resources changes are now listened

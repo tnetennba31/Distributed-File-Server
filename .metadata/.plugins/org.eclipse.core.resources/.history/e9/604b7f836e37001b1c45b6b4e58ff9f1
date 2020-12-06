@@ -33,7 +33,6 @@ public class ReadAllAction extends MenuAction {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		DistributedFileClient.getDistributedFileImpl().csCloseRead(input);
 	}
 
 //	@Override

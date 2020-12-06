@@ -2,6 +2,7 @@ package DistributedFileApp;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.omg.CORBA.ORB;
@@ -39,7 +40,15 @@ class DistributedFileImpl extends DistributedFilePOA {
 	}
 
 	public String csOpenWrite(String fileName) {
-		return fileName;
+		if (FileManager.fileExistsLocally(fileName)) {
+			if (getAcks(fileName, this)) {
+				return fileName; // tell everyone to lock
+			} else {
+				return "Could not lock this file";
+			}
+		} else {
+			return FileManager.findForWriting(fileName, this); // finds it or says fake news
+		}
 	}
 
 	public boolean csCloseWrite(String fileName) {
@@ -67,17 +76,51 @@ class DistributedFileImpl extends DistributedFilePOA {
 	} // fake news, remove if feasible
 
 	public String ssOpenWrite(String fileName) {
-		return fileName;
+		File f = new File(System.getProperty("user.home") + "/files/" + fileName);
+		if (f.exists()) {
+			if (getAcks(fileName, this)) {
+				Scanner s = null;
+				try {
+					s = new Scanner(f);
+				} catch (FileNotFoundException e) {
+					System.out.println("idk dude we got a file not found exception in ssOpenWrite");
+				}
+				StringBuffer contents = new StringBuffer("");
+				while(s.hasNext()) {
+					contents.append(s.nextLine() + "\n");
+				}
+				s.close();
+				return contents.toString();
+			} else {
+				return "Could not lock this file";
+			}
+		} else {
+			return "File Not Found";
+		}
 	}
 
 	public boolean ssLockWrite(String fileName) {
-		return true;
+		if (FileManager.lockedFiles.contains(fileName)) {
+			return false;
+		} else {
+			FileManager.lockedFiles.add(fileName);
+			return true;
+		}
 	}
 
 	public String ssCloseWrite(String fileName) {
+		if (FileManager.lockedFiles.contains(fileName)) {
+			FileManager.lockedFiles.remove(fileName);
+		}
 		return fileName;
 	}
 
+	/**
+	 * Method to find a file far away and return it for reading
+	 * 
+	 * @param fileName name of file
+	 * @return contents of file or file not found string
+	 */
 	public String searchOtherServers(String fileName) {
 		ConfigReader.resetReader();
 		String nextServer = ConfigReader.getNextAddress();
@@ -86,7 +129,6 @@ class DistributedFileImpl extends DistributedFilePOA {
 			String address[] = { "-ORBInitialHost", nextServer, "-ORBInitialPort", "1058", "-port", "1059" };
 			// create and initialize the ORB
 			ORB orb = ORB.init(address, null);
-			// return array of ss Impls
 			try {
 				org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
 				NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
@@ -103,34 +145,61 @@ class DistributedFileImpl extends DistributedFilePOA {
 					nextServer = ConfigReader.getNextAddress();
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				System.out.println("Server at " + nextServer
+						+ " is not available right now.  Please leave a message after the beep.");
 				nextServer = ConfigReader.getNextAddress();
 			}
 		}
 
 		return "File Not Found";
-
 	}
 
-//	public DistributedFile connectToAnotherServer(String serverhost) {
-//		String address[] = { "-ORBInitialHost", serverhost, "-ORBInitialPort", "1058", "-port", "1059" };
-//		// create and initialize the ORB
-//		ORB orb = ORB.init(address, null);
-//		DistributedFile server = null;
-//		// return array of ss Impls
-//		try {
-//			org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
-//			NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
-//			DistributedFile serverToServerImpl = DistributedFileHelper.narrow(ncRef.resolve_str("DistributedFile"));
-//
-//			server = serverToServerImpl;
-//			
-//			System.out.println("By Jove, we've connected to another server...");
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return server;
-//	}
+	/**
+	 * Gets all server impls so we can tell them to lock files for write
+	 * 
+	 * @return all da impls
+	 */
+	public ArrayList<DistributedFile> getAllServerImpls() {
+		ConfigReader.resetReader();
+		ArrayList<DistributedFile> servers = new ArrayList<>();
+		String nextServer = ConfigReader.getNextAddress();
+		while (nextServer != null) {
+			String address[] = { "-ORBInitialHost", nextServer, "-ORBInitialPort", "1058", "-port", "1059" };
+			// create and initialize the ORB
+			ORB orb = ORB.init(address, null);
+			try {
+				org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
+				NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
+				servers.add(DistributedFileHelper.narrow(ncRef.resolve_str("DistributedFile")));
+			} catch (Exception e) {
+				System.out.println("Server at " + nextServer
+						+ " is not available right now.  Please leave a message after the beep.");
+				nextServer = ConfigReader.getNextAddress();
+			}
+			nextServer = ConfigReader.getNextAddress();
+		}
+		return servers;
+	}
+
+	/**
+	 * Have other servers acknowledge a file is being locked for write
+	 * 
+	 * @param fileName
+	 * @param server
+	 * @return true if all ack, false if anyone nacks
+	 */
+	public boolean getAcks(String fileName, DistributedFileImpl server) {
+		ArrayList<DistributedFile> servers = server.getAllServerImpls();
+		for (DistributedFile s : servers) {
+			if (!s.ssLockWrite(fileName)) {
+				for (DistributedFile yee : servers) {
+					yee.ssCloseWrite(fileName);
+				}
+				return false;
+			}
+		}
+		return true;
+	}
 
 	// implement shutdown() method
 	public void shutdown() {

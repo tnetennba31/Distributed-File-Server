@@ -3,6 +3,7 @@ package DistributedFileApp;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FileManager {
@@ -10,6 +11,7 @@ public class FileManager {
 	// hashmap keeps track of how many clients are reading each file
 	static HashMap<String, Integer> clientsReading = new HashMap<String, Integer>();
 	static HashMap<String, Integer> fileVersionNumbers = new HashMap<String, Integer>();
+	static ArrayList<String> lockedFiles = new ArrayList<>();
 
 	public static boolean fileExistsLocally(String fileName) {
 		String path = System.getProperty("user.home") + "/files/" + fileName;
@@ -70,6 +72,39 @@ public class FileManager {
 
 	public static HashMap<String, Integer> getClientsReading() {
 		return clientsReading;
+	}
+
+//	/**
+//	 * Have other servers acknowledge a file is being locked for write
+//	 * 
+//	 * @param fileName
+//	 * @param server
+//	 * @return either filename or error message if nack
+//	 */
+//	public static String getAcks(String fileName, DistributedFileImpl server) {
+//		for (DistributedFile s : server.getAllServerImpls()) {
+//			if (!s.ssLockWrite(fileName)) {
+//				return "Can not lock this file";
+//			}
+//		}
+//		return fileName;
+//	}
+
+	/**
+	 * Find a file if it exists far away
+	 * 
+	 * @param fileName
+	 * @param server
+	 * @return file contents or error message if nack
+	 */
+	public static String findForWriting(String fileName, DistributedFileImpl server) {
+		for (DistributedFile s : server.getAllServerImpls()) {
+			String openWriteOutput = s.ssOpenWrite(fileName);
+			if (openWriteOutput != "File Not Found" && openWriteOutput != "Could not lock this file") {
+				return openWriteOutput;
+			}
+		}
+		return "File Not Found";
 	}
 
 }

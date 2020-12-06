@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="javax.naming.InvalidNameException"/>
 <fullyQualifiedTypeName name="DistributedFileApp.DistributedFilePOA"/>
@@ -10,4 +9,5 @@
 <fullyQualifiedTypeName name="DistributedFileApp.DistributedFileHelper"/>
 <fullyQualifiedTypeName name="java.nio.file.FileSystem"/>
 <fullyQualifiedTypeName name="java.io.FileWriter"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
 </qualifiedTypeNameHistroy>

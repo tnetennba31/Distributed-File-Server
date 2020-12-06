@@ -23,7 +23,6 @@ class DistributedFileImpl extends DistributedFilePOA {
 		boolean newFile;
 		if (FileManager.lockedFiles.contains(fileName)) {
 			System.out.println("File is being written to and cannot be opened at this time.");
-			return "Could not lock this file";
 		} else {
 			if (FileManager.clientsReading.containsKey(fileName)) {
 				newFile = false;

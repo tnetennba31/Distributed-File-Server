@@ -56,15 +56,11 @@ public class FileManager {
 		// if no more readers, delete file and remove hashmap entry
 		if (clientsReading.get(inputFileName) == 0 && !NativeFileReader.isNativeFile(inputFileName)) {
 			clientsReading.remove(inputFileName);
-			System.out.println("No one is reading " + inputFileName + " so it is being deleted.");
+			System.out.println("No one is reading " + inputFileName + " so it was deleted.");
 
-			try {
-				// delete the local file
-				File fileToDelete = new File(System.getProperty("user.home") + "/files/" + inputFileName);
-				fileToDelete.delete();
-			} catch (Exception e) {
-				System.out.println("Couldn't delete this file.");
-			}
+			// delete the local file
+			File fileToDelete = new File(System.getProperty("user.home") + "/files/" + inputFileName);
+			fileToDelete.delete();
 		}
 	}
 

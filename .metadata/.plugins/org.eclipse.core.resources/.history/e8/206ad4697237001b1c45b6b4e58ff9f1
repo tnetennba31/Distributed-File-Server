@@ -19,14 +19,8 @@ class DistributedFileImpl extends DistributedFilePOA {
 	}
 
 	public String csOpenRead(String fileName) {
-		boolean newFile;
-		if (FileManager.clientsReading.containsKey(fileName)) {
-			newFile = false;
-		} else {
-			newFile = true;
-		}
 		if (FileManager.fileExistsLocally(fileName) || FileManager.fileExistsRemotely(fileName, this)) {
-			FileManager.addClientReading(fileName, newFile);
+			FileManager.addClientReading(fileName, true);
 			return fileName;
 		} else { // doesn't exist anywhere
 			return "File Not Found";

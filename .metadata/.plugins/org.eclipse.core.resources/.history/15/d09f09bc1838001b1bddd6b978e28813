@@ -53,8 +53,8 @@ public class NativeFileReader {
 		try {
 			writer = new BufferedWriter(new FileWriter(serversListFile, true));
 
+			writer.newLine();
 			writer.write(nameOfFileToAdd);
-			writer.close();
 
 		} catch (IOException e) {
 			System.out.println("An error occurred while adding the new file name to list of native files.");

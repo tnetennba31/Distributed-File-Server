@@ -79,6 +79,10 @@
 //}
 //
 
+
+
+
+
 package menuStateMachine;
 
 import java.io.File;
@@ -113,7 +117,7 @@ public class WriteLineAction extends MenuAction {
 			try {
 				realFileName = System.getProperty("user.home") + "/files/" + realFileName;
 				Path realFilePath = (new File(realFileName)).toPath();
-
+				
 				// read all content into array
 				List<String> fileContent = new ArrayList<>(Files.readAllLines(realFilePath, StandardCharsets.UTF_8));
 
@@ -124,23 +128,23 @@ public class WriteLineAction extends MenuAction {
 					System.out.println("Enter the line number that you want to change. Enter a non-number to exit:");
 					int chosenLine = scanner.nextInt();
 					scanner.nextLine(); // account for left over input
-
+					
 					if (chosenLine >= 0 && chosenLine < fileContent.size()) {
 
-						System.out.println("Enter the text that you want to replace line " + chosenLine + " of " + input
-								+ " with.");
+					System.out.println(
+							"Enter the text that you want to replace line " + chosenLine + " of " + input + " with.");
 
-						replacementText = scanner.nextLine();
-						replacementText = replacementText.trim(); // remove white space (newlines characters)
+					replacementText = scanner.nextLine();
+					replacementText = replacementText.trim(); // remove white space (newlines characters)
 
-						// change required line
-						fileContent.set(chosenLine, replacementText);
-						// write back to array
-						Files.write(realFilePath, fileContent, StandardCharsets.UTF_8);
+					// change required line
+					fileContent.set(chosenLine, replacementText);
+					// write back to array
+					Files.write(realFilePath, fileContent, StandardCharsets.UTF_8);
 					} else {
 						System.out.println("Line number outside the range of the file.");
 					}
-
+					
 				}
 
 			} catch (InputMismatchException e) {

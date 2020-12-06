@@ -19,15 +19,15 @@ public class WriteAppendAction extends MenuAction {
 		String input = scanner.nextLine();
 
 		String realFileName = DistributedFileClient.getDistributedFileImpl().csOpenWrite(input);
-		if (realFileName.equalsIgnoreCase("Could not lock this file")) {
+		if (realFileName == "Could not lock this file") {
 			System.out.println("Sorry, you cannot lock the file at this time");
-		} else if (realFileName.equalsIgnoreCase("File Not Found")) {
+		} else if (realFileName == "File Not Found") {
 			System.out.println("Sorry, a file by this name does not exist");
 		} else {
-			realFileName = System.getProperty("user.home") + "/files/" + realFileName;
 			try {
 
 				BufferedWriter writer = new BufferedWriter(new FileWriter(realFileName, true));
+
 				String textToAppend;
 
 				while (true) {

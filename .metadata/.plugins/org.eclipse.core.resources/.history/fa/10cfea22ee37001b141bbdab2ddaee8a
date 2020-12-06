@@ -101,8 +101,7 @@ public class FileManager {
 		for (DistributedFile s : server.getAllServerImpls()) {
 			String openWriteOutput = s.ssOpenWrite(fileName);
 			if (!openWriteOutput.equalsIgnoreCase("File Not Found") && !openWriteOutput.equalsIgnoreCase("Could not lock this file")) {
-				copyToLocal(fileName, openWriteOutput);
-				return fileName;
+				return openWriteOutput;
 			}
 		}
 		return "File Not Found";

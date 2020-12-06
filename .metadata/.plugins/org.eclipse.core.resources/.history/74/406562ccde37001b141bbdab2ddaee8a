@@ -10,8 +10,7 @@ public class OpenWriteMenuState extends State
 {
 
 	private MenuOption[] myMenuOptions =
-		{ new MenuOptionForAction("Append to File", new WriteAppendAction(), OpenWriteMenuState.class),
-				new MenuOptionForAction("Replace Line in File", new WriteLineAction(), OpenWriteMenuState.class),
+		{ new MenuOptionForAction("Let's Write!", new WriteAction(), OpenWriteMenuState.class),
 				new MenuOptionForMenu("Go Back", StartState.class),
 				new MenuOptionForMenu("Exit", EndState.class) };
 	

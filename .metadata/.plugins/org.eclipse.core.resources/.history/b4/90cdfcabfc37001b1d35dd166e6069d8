@@ -195,6 +195,9 @@ class DistributedFileImpl extends DistributedFilePOA {
 		ArrayList<DistributedFile> servers = server.getAllServerImpls();
 		for (DistributedFile s : servers) {
 			if (!s.ssLockWrite(fileName)) {
+				for (DistributedFile yee : servers) {
+					yee.ssCloseWrite(fileName);
+				}
 				return false;
 			}
 		}

@@ -1,20 +1,15 @@
 package DistributedFileApp;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
 
 public class NativeFileReader {
-
-	static final String serversListFile = System.getProperty("user.home") + "/files/NativeFileList.config";
+	static String serversListFile = System.getProperty("user.home") + "/files/NativeFileList.config";
 	private static BufferedReader bufferedReader;
 
 	static {
@@ -48,10 +43,10 @@ public class NativeFileReader {
 
 		BufferedWriter writer;
 
-		nameOfFileToAdd = nameOfFileToAdd.trim();
+		nameOfFileToAdd = nameOfFileToAdd.strip();
 
 		try {
-			writer = new BufferedWriter(new FileWriter(serversListFile, true));
+			writer = new BufferedWriter(new FileWriter(FileManager.NAME_OF_NATIVE_FILE_LIST, true));
 
 			writer.newLine();
 			writer.write(nameOfFileToAdd);
@@ -63,23 +58,19 @@ public class NativeFileReader {
 
 	public static void removeFromListOfNativeFiles(String nameOfFileToRemove) {
 
-		try {
-			// read all content into list
-			ArrayList<String> fileContent = new ArrayList<>(
-					Files.readAllLines((new File(serversListFile)).toPath(), StandardCharsets.UTF_8));
+		// read all content into list
+		ArrayList<String> fileContent = new ArrayList<>(
+				Files.readAllLines(FileManager.NAME_OF_NATIVE_FILE_LIST, StandardCharsets.UTF_8));
 
-			// change required line
-			for (String s : fileContent) {
-				if (s == nameOfFileToRemove) {
-					fileContent.remove(fileContent.indexOf(s));
-				}
+		// change required line
+		for (String s : fileContent) {
+			if (s == nameOfFileToRemove) {
+				fileContent.remove(fileContent.indexOf(s));
 			}
-
-			// write back to file
-			Files.write((new File(serversListFile)).toPath(), fileContent, StandardCharsets.UTF_8);
-		} catch (IOException e) {
-			System.out.println("uh oh spaghetti-o, removing from native file list");
 		}
+
+		// write back to file
+		Files.write(FileManager.NAME_OF_NATIVE_FILE_LIST, fileContent, StandardCharsets.UTF_8);
 	}
 
 }

@@ -13,7 +13,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 
 public class NativeFileReader {
-
+	
 	static final String serversListFile = System.getProperty("user.home") + "/files/NativeFileList.config";
 	private static BufferedReader bufferedReader;
 
@@ -63,23 +63,19 @@ public class NativeFileReader {
 
 	public static void removeFromListOfNativeFiles(String nameOfFileToRemove) {
 
-		try {
-			// read all content into list
-			ArrayList<String> fileContent = new ArrayList<>(
-					Files.readAllLines((new File(serversListFile)).toPath(), StandardCharsets.UTF_8));
+		// read all content into list
+		ArrayList<String> fileContent = new ArrayList<>(
+				Files.readAllLines((new File(serversListFile)).toPath(), StandardCharsets.UTF_8));
 
-			// change required line
-			for (String s : fileContent) {
-				if (s == nameOfFileToRemove) {
-					fileContent.remove(fileContent.indexOf(s));
-				}
+		// change required line
+		for (String s : fileContent) {
+			if (s == nameOfFileToRemove) {
+				fileContent.remove(fileContent.indexOf(s));
 			}
-
-			// write back to file
-			Files.write((new File(serversListFile)).toPath(), fileContent, StandardCharsets.UTF_8);
-		} catch (IOException e) {
-			System.out.println("uh oh spaghetti-o, removing from native file list");
 		}
+
+		// write back to file
+		Files.write(FileManager.NAME_OF_NATIVE_FILE_LIST, fileContent, StandardCharsets.UTF_8);
 	}
 
 }

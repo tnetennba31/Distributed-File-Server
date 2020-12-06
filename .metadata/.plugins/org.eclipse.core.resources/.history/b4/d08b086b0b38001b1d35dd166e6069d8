@@ -49,30 +49,46 @@ public class FileManager {
 		System.out.println("Reader added. Number reading " + fileName + " is now " + clientsReading.get(fileName));
 	}
 
-	static void doneReading(String inputFileName) {
+	static void checkForDelete(String inputFileName) {
 		// decrement number of clients reading in hashmap
 		clientsReading.put(inputFileName, clientsReading.get(inputFileName) - 1);
 		System.out.println(
 				"Reader removed. Number reading " + inputFileName + " is now " + clientsReading.get(inputFileName));
 
-	}
+		// if no more readers, delete file and remove hashmap entry
+		if (clientsReading.get(inputFileName) == 0 && !NativeFileReader.isNativeFile(inputFileName)) {
+			clientsReading.remove(inputFileName);
+			System.out.println("No one is reading " + inputFileName + " so it is being deleted.");
 
-	static void deleteFile(String inputFileName) {
-		clientsReading.remove(inputFileName);
-		System.out.println("No one is reading out of date copy of " + inputFileName + " so it is being deleted.");
-
-		try {
-			// delete the local file
-			File fileToDelete = new File(System.getProperty("user.home") + "/files/" + inputFileName);
-			fileToDelete.delete();
-		} catch (Exception e) {
-			System.out.println("Couldn't delete this file.");
+			try {
+				// delete the local file
+				File fileToDelete = new File(System.getProperty("user.home") + "/files/" + inputFileName);
+				fileToDelete.delete();
+			} catch (Exception e) {
+				System.out.println("Couldn't delete this file.");
+			}
 		}
 	}
 
 	public static HashMap<String, Integer> getClientsReading() {
 		return clientsReading;
 	}
+
+//	/**
+//	 * Have other servers acknowledge a file is being locked for write
+//	 * 
+//	 * @param fileName
+//	 * @param server
+//	 * @return either filename or error message if nack
+//	 */
+//	public static String getAcks(String fileName, DistributedFileImpl server) {
+//		for (DistributedFile s : server.getAllServerImpls()) {
+//			if (!s.ssLockWrite(fileName)) {
+//				return "Can not lock this file";
+//			}
+//		}
+//		return fileName;
+//	}
 
 	/**
 	 * Find a file if it exists far away
@@ -84,8 +100,7 @@ public class FileManager {
 	public static String findForWriting(String fileName, DistributedFileImpl server) {
 		for (DistributedFile s : server.getAllServerImpls()) {
 			String openWriteOutput = s.ssOpenWrite(fileName);
-			if (!openWriteOutput.equalsIgnoreCase("File Not Found")
-					&& !openWriteOutput.equalsIgnoreCase("Could not lock this file")) {
+			if (!openWriteOutput.equalsIgnoreCase("File Not Found") && !openWriteOutput.equalsIgnoreCase("Could not lock this file")) {
 				copyToLocal(fileName, openWriteOutput);
 				return fileName;
 			}

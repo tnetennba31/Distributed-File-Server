@@ -58,15 +58,20 @@ public class FileManager {
 	}
 
 	static void deleteFile(String inputFileName) {
-		clientsReading.remove(inputFileName);
-		System.out.println("No one is reading out of date copy of " + inputFileName + " so it is being deleted.");
+		// if no more readers, delete file and remove hashmap entry
+		if (clientsReading.get(inputFileName) == 0 && !NativeFileReader.isNativeFile(inputFileName)) {
+			clientsReading.remove(inputFileName);
+			System.out.println("No one is reading " + inputFileName + " so it is being deleted.");
 
-		try {
-			// delete the local file
-			File fileToDelete = new File(System.getProperty("user.home") + "/files/" + inputFileName);
-			fileToDelete.delete();
-		} catch (Exception e) {
-			System.out.println("Couldn't delete this file.");
+			try {
+				// delete the local file
+				File fileToDelete = new File(System.getProperty("user.home") + "/files/" + inputFileName);
+				fileToDelete.delete();
+			} catch (Exception e) {
+				System.out.println("Couldn't delete this file.");
+			}
+		} if (NativeFileReader.isNativeFile(inputFileName)) {
+			NativeFileReader.removeFromListOfNativeFiles(inputFileName);
 		}
 	}
 

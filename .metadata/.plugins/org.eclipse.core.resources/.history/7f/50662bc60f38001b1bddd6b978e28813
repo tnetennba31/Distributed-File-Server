@@ -35,10 +35,7 @@ class DistributedFileImpl extends DistributedFilePOA {
 	}
 
 	public boolean csCloseRead(String fileName) {
-		FileManager.doneReading(fileName);
-		if (FileManager.clientsReading.get(fileName) == 0 && !NativeFileReader.isNativeFile(fileName)) {
-			FileManager.deleteFile(fileName);
-		}
+		FileManager.checkForDelete(fileName);
 		return true;
 	}
 
@@ -95,7 +92,7 @@ class DistributedFileImpl extends DistributedFilePOA {
 					System.out.println("idk dude we got a file not found exception in ssOpenWrite");
 				}
 				StringBuffer contents = new StringBuffer("");
-				while (s.hasNext()) {
+				while(s.hasNext()) {
 					contents.append(s.nextLine() + "\n");
 				}
 				s.close();
@@ -121,12 +118,7 @@ class DistributedFileImpl extends DistributedFilePOA {
 		if (FileManager.lockedFiles.contains(fileName)) {
 			FileManager.lockedFiles.remove(fileName);
 		}
-		if (NativeFileReader.isNativeFile(fileName)) {
-			NativeFileReader.removeFromListOfNativeFiles(fileName);
-			if (FileManager.clientsReading.get(fileName) == 0) {
-				FileManager.deleteFile(fileName);
-			}
-		}
+		FileManager.checkForDelete(fileName);
 		return fileName;
 	}
 

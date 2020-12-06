@@ -59,7 +59,7 @@ public class FileManager {
 
 	static void deleteFile(String inputFileName) {
 		clientsReading.remove(inputFileName);
-		System.out.println("No one is reading out of date copy of " + inputFileName + " so it is being deleted.");
+		System.out.println("No one is reading " + inputFileName + " so it is being deleted.");
 
 		try {
 			// delete the local file

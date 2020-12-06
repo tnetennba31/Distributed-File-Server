@@ -100,7 +100,7 @@ public class FileManager {
 	public static String findForWriting(String fileName, DistributedFileImpl server) {
 		for (DistributedFile s : server.getAllServerImpls()) {
 			String openWriteOutput = s.ssOpenWrite(fileName);
-			if (!openWriteOutput.equalsIgnoreCase("File Not Found") && !openWriteOutput.equalsIgnoreCase("Could not lock this file")) {
+			if (openWriteOutput != "File Not Found" && openWriteOutput != "Could not lock this file") {
 				return openWriteOutput;
 			}
 		}

@@ -62,7 +62,7 @@ public class NativeFileReader {
 	}
 
 	public static void removeFromListOfNativeFiles(String nameOfFileToRemove) {
-		resetReader();
+
 		try {
 			// read all content into list
 			ArrayList<String> fileContent = new ArrayList<>(

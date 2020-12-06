@@ -19,16 +19,13 @@ public class ReadRecordAction extends MenuAction {
 		System.out.println("Enter the name of the file to open for read:");
 		String input = keyboard.nextLine();
 
-		String realFileName = DistributedFileClient.getDistributedFileImpl().csOpenRead(input);
-		if (realFileName.equalsIgnoreCase("Could not lock this file")) {
-			System.out.println("Sorry, you cannot lock the file at this time");
-		} else if (realFileName.equalsIgnoreCase("File Not Found")) {
-			System.out.println("Sorry, a file by this name does not exist");
+		String fileName = DistributedFileClient.getDistributedFileImpl().csOpenRead(input);
+		if (fileName.equalsIgnoreCase("File Not Found")) {
+			System.out.println(fileName);
 		} else {
 			java.util.List<String> fileContents = null;
 			try {
-				fileContents = Files
-						.readAllLines(Paths.get(System.getProperty("user.home") + "/files/" + realFileName));
+				fileContents = Files.readAllLines(Paths.get(System.getProperty("user.home") + "/files/" + fileName));
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -43,7 +40,7 @@ public class ReadRecordAction extends MenuAction {
 					}
 				}
 			} catch (InputMismatchException e) {
-				DistributedFileClient.getDistributedFileImpl().csCloseRead(realFileName);
+				DistributedFileClient.getDistributedFileImpl().csCloseRead(fileName);
 				return;
 			}
 		}

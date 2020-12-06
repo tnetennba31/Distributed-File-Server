@@ -24,25 +24,16 @@ public class ReadAllAction extends MenuAction {
 		Scanner keyboard = new Scanner(System.in);
 		System.out.println("Enter the name of the file to open for read:");
 		String input = keyboard.nextLine();
-
-		String realFileName = DistributedFileClient.getDistributedFileImpl().csOpenRead(input);
-		if (realFileName.equalsIgnoreCase("Could not lock this file")) {
-			System.out.println("Sorry, you cannot lock the file at this time");
-		} else if (realFileName.equalsIgnoreCase("File Not Found")) {
-			System.out.println("Sorry, a file by this name does not exist");
-		} else {
-
-			try {
-				List<String> allLines = Files
-						.readAllLines(Paths.get(System.getProperty("user.home") + "/files/" + realFileName));
-				for (String s : allLines) {
-					System.out.println(s);
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
+		try {
+			List<String> allLines = Files.readAllLines(Paths.get(System.getProperty("user.home") + "/files/"
+					+ DistributedFileClient.getDistributedFileImpl().csOpenRead(input)));
+			for (String s : allLines) {
+				System.out.println(s);
 			}
-			DistributedFileClient.getDistributedFileImpl().csCloseRead(input);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+		DistributedFileClient.getDistributedFileImpl().csCloseRead(input);
 	}
 
 //	@Override

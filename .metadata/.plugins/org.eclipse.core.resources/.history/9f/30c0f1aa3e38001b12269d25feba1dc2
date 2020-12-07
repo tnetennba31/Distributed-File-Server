@@ -52,16 +52,15 @@ public class LockedFilesManager {
 
 			ArrayList<String> updatedContent = new ArrayList<>();
 			updatedContent.addAll(fileContent);
-			
 			// change required line
 			for (String s : fileContent) {
 				if (s.equalsIgnoreCase(fileToUnlock)) {
-					updatedContent.remove(fileContent.indexOf(s));
+					fileContent.remove(fileContent.indexOf(s));
 				}
 			}
 
 			// write back to file
-			Files.write((new File(lockedFilesList)).toPath(), updatedContent, StandardCharsets.UTF_8);
+			Files.write((new File(lockedFilesList)).toPath(), fileContent, StandardCharsets.UTF_8);
 		} catch (IOException e) {
 			System.out.println("uh oh spaghetti-o, removing from locked file list");
 		}

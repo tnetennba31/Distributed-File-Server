@@ -50,18 +50,15 @@ public class NativeFileReader {
 			ArrayList<String> fileContent = new ArrayList<>(
 					Files.readAllLines((new File(serversListFile)).toPath(), StandardCharsets.UTF_8));
 
-			ArrayList<String> updatedContent = new ArrayList<>();
-			updatedContent.addAll(fileContent);
-
 			// change required line
 			for (String s : fileContent) {
 				if (s.equalsIgnoreCase(nameOfFileToRemove)) {
-					updatedContent.remove(fileContent.indexOf(s));
+					fileContent.remove(fileContent.indexOf(s));
 				}
 			}
 
 			// write back to file
-			Files.write((new File(serversListFile)).toPath(), updatedContent, StandardCharsets.UTF_8);
+			Files.write((new File(serversListFile)).toPath(), fileContent, StandardCharsets.UTF_8);
 		} catch (IOException e) {
 			System.out.println("uh oh spaghetti-o, removing from native file list");
 		}

@@ -61,7 +61,7 @@ public class LockedFilesManager {
 			}
 
 			// write back to file
-			Files.write((new File(lockedFilesList)).toPath(), updatedContent, StandardCharsets.UTF_8);
+			Files.write((new File(lockedFilesList)).toPath(), fileContent, StandardCharsets.UTF_8);
 		} catch (IOException e) {
 			System.out.println("uh oh spaghetti-o, removing from locked file list");
 		}

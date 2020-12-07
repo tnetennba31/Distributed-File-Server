@@ -7,6 +7,9 @@ import java.util.HashMap;
 
 public class FileManager {
 
+//	// hashmap keeps track of how many clients are reading each file
+//	static HashMap<String, Integer> clientsReading = new HashMap<String, Integer>();
+
 	public static boolean fileExistsLocally(String fileName) {
 		String path = System.getProperty("user.home") + "/files/" + fileName;
 		return (new File(path)).exists();

@@ -123,8 +123,6 @@ class DistributedFileImpl extends DistributedFilePOA {
 	}
 
 	public String ssCloseWrite(String fileName) {
-		System.out.println("Lets read a lock");
-		System.out.println(FileManager.lockedFiles.get(0));
 		if (FileManager.lockedFiles.contains(fileName)) {
 			FileManager.lockedFiles.remove(fileName);
 		}

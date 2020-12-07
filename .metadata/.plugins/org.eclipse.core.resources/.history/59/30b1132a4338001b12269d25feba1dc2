@@ -138,10 +138,8 @@ class DistributedFileImpl extends DistributedFilePOA {
 		}
 		if (NativeFileReader.isNativeFile(fileName)) {
 			NativeFileReader.removeFromListOfNativeFiles(fileName);
-			System.out.println("got to line 141, removed from native list");
 			if (clientsReading.containsKey(fileName)) {
-				System.out.println("line 143, contains key " + fileName);
-				if (clientsReading.get(fileName).intValue() == 0) {
+				if (clientsReading.get(fileName) == 0) {
 					System.out.println("gonna delete a file!!!!!!!!!!!!!!!!!");
 					FileManager.deleteFile(fileName, clientsReading);
 				}

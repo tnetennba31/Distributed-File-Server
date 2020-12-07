@@ -128,7 +128,7 @@ class DistributedFileImpl extends DistributedFilePOA {
 		}
 		if (NativeFileReader.isNativeFile(fileName)) {
 			NativeFileReader.removeFromListOfNativeFiles(fileName);
-			if (FileManager.clientsReading.get(fileName).equals(0)) {
+			if (FileManager.clientsReading.get(fileName) == 0) {
 				FileManager.deleteFile(fileName);
 			}
 		}

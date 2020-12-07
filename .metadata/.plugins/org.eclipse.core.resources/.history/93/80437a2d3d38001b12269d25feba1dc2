@@ -52,7 +52,7 @@ public class NativeFileReader {
 
 			// change required line
 			for (String s : fileContent) {
-				if (s.equalsIgnoreCase(nameOfFileToRemove)) {
+				if (s == nameOfFileToRemove) {
 					fileContent.remove(fileContent.indexOf(s));
 				}
 			}

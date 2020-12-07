@@ -52,7 +52,7 @@ public class LockedFilesManager {
 
 			// change required line
 			for (String s : fileContent) {
-				if (s.equalsIgnoreCase(fileToUnlock)) {
+				if (s == fileToUnlock) {
 					fileContent.remove(fileContent.indexOf(s));
 				}
 			}

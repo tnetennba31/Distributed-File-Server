@@ -35,8 +35,8 @@ public class LockedFilesManager {
 		try {
 			writer = new BufferedWriter(new FileWriter(lockedFilesList, true));
 
-			writer.write(fileToLock);
 			writer.newLine();
+			writer.write(fileToLock);
 			writer.close();
 
 		} catch (IOException e) {

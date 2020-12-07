@@ -35,8 +35,8 @@ public class NativeFileReader {
 		try {
 			writer = new BufferedWriter(new FileWriter(serversListFile, true));
 
-			writer.write(nameOfFileToAdd);
 			writer.newLine();
+			writer.write(nameOfFileToAdd);
 			writer.close();
 
 		} catch (IOException e) {
@@ -45,6 +45,7 @@ public class NativeFileReader {
 	}
 
 	public static void removeFromListOfNativeFiles(String nameOfFileToRemove) {
+//		resetReader();
 		try {
 			// read all content into list
 			ArrayList<String> fileContent = new ArrayList<>(

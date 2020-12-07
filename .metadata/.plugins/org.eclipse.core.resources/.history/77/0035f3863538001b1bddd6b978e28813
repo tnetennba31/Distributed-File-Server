@@ -12,6 +12,11 @@ import java.util.List;
 public class NativeFileReader {
 
 	static final String serversListFile = System.getProperty("user.home") + "/files/NativeFileList.config";
+//	private static BufferedReader bufferedReader;
+
+//	static {
+//		resetReader();
+//	}
 
 	public static boolean isNativeFile(String fileName) {
 		try {
@@ -26,6 +31,28 @@ public class NativeFileReader {
 		return false;
 	}
 
+//		resetReader();
+//		try {
+//			String s = bufferedReader.readLine();
+//			while (s != null) {
+//				if (s.contentEquals(fileName))
+//					return true;
+//				s = bufferedReader.readLine();
+//			}
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		return false;
+//	}
+//
+//	public static void resetReader() {
+//		try {
+//			bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(serversListFile)));
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		}
+//	}
+
 	public static void addToListOfNativeFiles(String nameOfFileToAdd) {
 
 		BufferedWriter writer;
@@ -35,8 +62,8 @@ public class NativeFileReader {
 		try {
 			writer = new BufferedWriter(new FileWriter(serversListFile, true));
 
-			writer.write(nameOfFileToAdd);
 			writer.newLine();
+			writer.write(nameOfFileToAdd);
 			writer.close();
 
 		} catch (IOException e) {
@@ -45,6 +72,7 @@ public class NativeFileReader {
 	}
 
 	public static void removeFromListOfNativeFiles(String nameOfFileToRemove) {
+//		resetReader();
 		try {
 			// read all content into list
 			ArrayList<String> fileContent = new ArrayList<>(

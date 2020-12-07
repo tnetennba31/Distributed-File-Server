@@ -35,8 +35,8 @@ public class NativeFileReader {
 		try {
 			writer = new BufferedWriter(new FileWriter(serversListFile, true));
 
-			writer.write(nameOfFileToAdd);
 			writer.newLine();
+			writer.write(nameOfFileToAdd);
 			writer.close();
 
 		} catch (IOException e) {

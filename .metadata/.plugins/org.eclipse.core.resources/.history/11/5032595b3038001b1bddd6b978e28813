@@ -223,10 +223,9 @@ class DistributedFileImpl extends DistributedFilePOA {
 //			if (lock == false) {
 //				System.out.println("Couldn't lock bro");
 //			}
-			if (!s.ssLockWrite(fileName)) {
-				System.out.println("Couldn't lock bro");
-				return false;
-			}
+			 if (!s.ssLockWrite(fileName)) {
+			 return false;
+			 }
 		}
 		System.out.println("Got all those locks bro");
 		return true;

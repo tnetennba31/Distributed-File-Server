@@ -219,14 +219,13 @@ class DistributedFileImpl extends DistributedFilePOA {
 	public boolean getAcks(String fileName, DistributedFileImpl server) {
 		ArrayList<DistributedFile> servers = server.getAllServerImpls();
 		for (DistributedFile s : servers) {
-//			boolean lock = s.ssLockWrite(fileName);
-//			if (lock == false) {
-//				System.out.println("Couldn't lock bro");
-//			}
-			if (!s.ssLockWrite(fileName)) {
+			boolean lock = s.ssLockWrite(fileName);
+			if (lock == false) {
 				System.out.println("Couldn't lock bro");
-				return false;
 			}
+			// if (!s.ssLockWrite(fileName)) {
+			// return false;
+			// }
 		}
 		System.out.println("Got all those locks bro");
 		return true;

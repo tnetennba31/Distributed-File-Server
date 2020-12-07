@@ -54,7 +54,7 @@ public class FileManager {
 
 	}
 
-	static void deleteFile(String inputFileName, HashMap<String, Integer> clientsReading) {
+	static void deleteFile(String inputFileName) {
 		clientsReading.remove(inputFileName);
 		System.out.println("No one is reading out of date copy of " + inputFileName + " so it is being deleted.");
 
@@ -65,6 +65,10 @@ public class FileManager {
 		} catch (Exception e) {
 			System.out.println("Couldn't delete this file.");
 		}
+	}
+
+	public static HashMap<String, Integer> getClientsReading() {
+		return clientsReading;
 	}
 
 	/**

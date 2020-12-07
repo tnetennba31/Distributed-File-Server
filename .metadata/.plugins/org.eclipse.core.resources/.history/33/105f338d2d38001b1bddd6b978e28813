@@ -3,7 +3,6 @@ package DistributedFileApp;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
 
 import org.omg.CORBA.ORB;
@@ -16,15 +15,8 @@ import org.omg.PortableServer.POAHelper;
 class DistributedFileImpl extends DistributedFilePOA {
 	private ORB orb;
 
-	// hashmap keeps track of how many clients are reading each file
-	static HashMap<String, Integer> clientsReading = new HashMap<String, Integer>();
-
 	public void setORB(ORB orb_val) {
 		orb = orb_val;
-	}
-
-	public static HashMap<String, Integer> getClientsReading() {
-		return clientsReading;
 	}
 
 	public String csOpenRead(String fileName) {
@@ -33,13 +25,13 @@ class DistributedFileImpl extends DistributedFilePOA {
 			System.out.println("File is being written to and cannot be opened at this time.");
 			return "Could not lock this file";
 		} else {
-			if (clientsReading.containsKey(fileName)) {
+			if (FileManager.clientsReading.containsKey(fileName)) {
 				newFile = false;
 			} else {
 				newFile = true;
 			}
 			if (FileManager.fileExistsLocally(fileName) || FileManager.fileExistsRemotely(fileName, this)) {
-				FileManager.addClientReading(fileName, newFile, clientsReading);
+				FileManager.addClientReading(fileName, newFile);
 				return fileName;
 			} else { // doesn't exist anywhere
 				return "File Not Found";
@@ -48,9 +40,9 @@ class DistributedFileImpl extends DistributedFilePOA {
 	}
 
 	public boolean csCloseRead(String fileName) {
-		FileManager.doneReading(fileName, clientsReading);
-		if (clientsReading.get(fileName) == 0 && !NativeFileReader.isNativeFile(fileName)) {
-			FileManager.deleteFile(fileName, clientsReading);
+		FileManager.doneReading(fileName);
+		if (FileManager.clientsReading.get(fileName) == 0 && !NativeFileReader.isNativeFile(fileName)) {
+			FileManager.deleteFile(fileName);
 		}
 		return true;
 	}
@@ -136,8 +128,8 @@ class DistributedFileImpl extends DistributedFilePOA {
 		}
 		if (NativeFileReader.isNativeFile(fileName)) {
 			NativeFileReader.removeFromListOfNativeFiles(fileName);
-			if (clientsReading.get(fileName) == 0) {
-				FileManager.deleteFile(fileName, clientsReading);
+			if (FileManager.clientsReading.get(fileName).equals(0)) {
+				FileManager.deleteFile(fileName);
 			}
 		}
 		return fileName;
@@ -223,9 +215,9 @@ class DistributedFileImpl extends DistributedFilePOA {
 			if (lock == false) {
 				System.out.println("Couldn't lock bro");
 			}
-			// if (!s.ssLockWrite(fileName)) {
-			// return false;
-			// }
+			//if (!s.ssLockWrite(fileName)) {
+			//	return false;
+			//}
 		}
 		System.out.println("Got all those locks bro");
 		return true;

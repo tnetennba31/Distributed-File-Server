@@ -48,9 +48,9 @@ class DistributedFileImpl extends DistributedFilePOA {
 	}
 
 	public boolean csCloseRead(String fileName) {
-		FileManager.doneReading(fileName, clientsReading);
-		if (clientsReading.get(fileName) == 0 && !NativeFileReader.isNativeFile(fileName)) {
-			FileManager.deleteFile(fileName, clientsReading);
+		FileManager.doneReading(fileName);
+		if (FileManager.clientsReading.get(fileName) == 0 && !NativeFileReader.isNativeFile(fileName)) {
+			FileManager.deleteFile(fileName);
 		}
 		return true;
 	}
@@ -136,8 +136,8 @@ class DistributedFileImpl extends DistributedFilePOA {
 		}
 		if (NativeFileReader.isNativeFile(fileName)) {
 			NativeFileReader.removeFromListOfNativeFiles(fileName);
-			if (clientsReading.get(fileName) == 0) {
-				FileManager.deleteFile(fileName, clientsReading);
+			if (FileManager.clientsReading.get(fileName).equals(0)) {
+				FileManager.deleteFile(fileName);
 			}
 		}
 		return fileName;

@@ -67,6 +67,10 @@ public class FileManager {
 		}
 	}
 
+	public static HashMap<String, Integer> getClientsReading() {
+		return clientsReading;
+	}
+
 	/**
 	 * Find a file if it exists far away
 	 * 

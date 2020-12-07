@@ -19,6 +19,7 @@ public class NativeFileReader {
 //	}
 
 	public static boolean isNativeFile(String fileName) {
+
 		try {
 			List<String> fileContent = new ArrayList<>(
 					Files.readAllLines((new File(serversListFile)).toPath(), StandardCharsets.UTF_8));

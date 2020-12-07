@@ -50,7 +50,6 @@ class DistributedFileImpl extends DistributedFilePOA {
 	public boolean csCloseRead(String fileName) {
 		FileManager.doneReading(fileName, clientsReading);
 		if (clientsReading.get(fileName) == 0 && !NativeFileReader.isNativeFile(fileName)) {
-			System.out.println("gonna delete from cs close read!!!!!!!!!!!!!1");
 			FileManager.deleteFile(fileName, clientsReading);
 		}
 		return true;
@@ -140,7 +139,6 @@ class DistributedFileImpl extends DistributedFilePOA {
 			NativeFileReader.removeFromListOfNativeFiles(fileName);
 			if (clientsReading.containsKey(fileName)) {
 				if (clientsReading.get(fileName) == 0) {
-					System.out.println("gonna delete a file!!!!!!!!!!!!!!!!!");
 					FileManager.deleteFile(fileName, clientsReading);
 				}
 			}

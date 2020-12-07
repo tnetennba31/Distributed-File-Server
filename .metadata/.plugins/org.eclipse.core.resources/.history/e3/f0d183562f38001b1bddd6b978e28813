@@ -17,13 +17,13 @@ class DistributedFileImpl extends DistributedFilePOA {
 	private ORB orb;
 
 	// hashmap keeps track of how many clients are reading each file
-	private HashMap<String, Integer> clientsReading = new HashMap<String, Integer>();
+	static HashMap<String, Integer> clientsReading = new HashMap<String, Integer>();
 
 	public void setORB(ORB orb_val) {
 		orb = orb_val;
 	}
 
-	public HashMap<String, Integer> getClientsReading() {
+	public static HashMap<String, Integer> getClientsReading() {
 		return clientsReading;
 	}
 

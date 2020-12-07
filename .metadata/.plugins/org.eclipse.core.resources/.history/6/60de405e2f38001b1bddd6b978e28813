@@ -23,7 +23,7 @@ class DistributedFileImpl extends DistributedFilePOA {
 		orb = orb_val;
 	}
 
-	public HashMap<String, Integer> getClientsReading() {
+	public static HashMap<String, Integer> getClientsReading() {
 		return clientsReading;
 	}
 

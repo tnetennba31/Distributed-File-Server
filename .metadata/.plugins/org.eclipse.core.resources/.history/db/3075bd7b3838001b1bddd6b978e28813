@@ -74,7 +74,6 @@ class DistributedFileImpl extends DistributedFilePOA {
 		for (DistributedFile s : getAllServerImpls()) {
 			s.ssCloseWrite(fileName);
 		}
-		LockedFilesManager.removeFromLockedList(fileName);
 		return true;
 	}
 
@@ -222,18 +221,17 @@ class DistributedFileImpl extends DistributedFilePOA {
 	public boolean getAcks(String fileName, DistributedFileImpl server) {
 		ArrayList<DistributedFile> servers = server.getAllServerImpls();
 		for (DistributedFile s : servers) {
+//			boolean lock = s.ssLockWrite(fileName);
+//			if (lock == false) {
+//				System.out.println("Couldn't lock bro");
+//			}
 			if (!s.ssLockWrite(fileName)) {
 				System.out.println("Couldn't lock bro");
 				return false;
 			}
 		}
-		if (ssLockWrite(fileName)) {
-			System.out.println("Got all those locks bro");
-			return true;
-		} else {
-			System.out.println("Couldn't lock bro");
-			return false;
-		}
+		System.out.println("Got all those locks bro");
+		return true;
 	}
 
 	// implement shutdown() method

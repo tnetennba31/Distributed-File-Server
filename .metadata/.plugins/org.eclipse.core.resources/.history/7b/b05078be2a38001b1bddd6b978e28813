@@ -21,7 +21,7 @@ class DistributedFileImpl extends DistributedFilePOA {
 
 	public String csOpenRead(String fileName) {
 		boolean newFile;
-		if (LockedFilesManager.isLockedFile(fileName)) {
+		if (FileManager.lockedFiles.contains(fileName)) {
 			System.out.println("File is being written to and cannot be opened at this time.");
 			return "Could not lock this file";
 		} else {
@@ -114,17 +114,20 @@ class DistributedFileImpl extends DistributedFilePOA {
 	}
 
 	public boolean ssLockWrite(String fileName) {
-		if (LockedFilesManager.isLockedFile(fileName)) {
+		if (FileManager.lockedFiles.contains(fileName)) {
 			return false;
 		} else {
-			LockedFilesManager.addToLockedList(fileName);
+			FileManager.lockedFiles.add(fileName);
+			System.out.println(FileManager.lockedFiles.get(0));
 			return true;
 		}
 	}
 
 	public String ssCloseWrite(String fileName) {
-		if (LockedFilesManager.isLockedFile(fileName)) {
-			LockedFilesManager.removeFromLockedList(fileName);
+		System.out.println("Lets read a lock");
+		System.out.println(FileManager.lockedFiles.get(0));
+		if (FileManager.lockedFiles.contains(fileName)) {
+			FileManager.lockedFiles.remove(fileName);
 		}
 		if (NativeFileReader.isNativeFile(fileName)) {
 			NativeFileReader.removeFromListOfNativeFiles(fileName);

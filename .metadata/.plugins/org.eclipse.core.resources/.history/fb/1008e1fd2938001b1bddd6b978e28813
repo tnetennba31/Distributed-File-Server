@@ -3,12 +3,14 @@ package DistributedFileApp;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FileManager {
 
 	// hashmap keeps track of how many clients are reading each file
 	static HashMap<String, Integer> clientsReading = new HashMap<String, Integer>();
+	static ArrayList<String> lockedFiles = new ArrayList<>();
 
 	public static boolean fileExistsLocally(String fileName) {
 		String path = System.getProperty("user.home") + "/files/" + fileName;
